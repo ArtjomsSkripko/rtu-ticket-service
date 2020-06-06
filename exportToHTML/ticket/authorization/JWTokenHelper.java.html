@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>JWTokenHelper.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+JWTokenHelper.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.authorization</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.text.ParseException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Collections</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.google.common.collect.Sets</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.jwk.JWK</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.jwk.JWKSet</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.jwk.KeyOperation</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.jwk.KeyUse</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.jwk.OctetSequenceKey</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.jwk.source.ImmutableJWKSet</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.jwk.source.JWKSource</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.proc.BadJOSEException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.proc.JWSKeySelector</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.proc.JWSVerificationKeySelector</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.proc.SecurityContext</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jose.util.Base64URL</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jwt.JWTClaimsSet</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jwt.SignedJWT</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jwt.proc.BadJWTException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jwt.proc.ConfigurableJWTProcessor</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.nimbusds.jwt.proc.DefaultJWTProcessor</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.collections4.ListUtils</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.stereotype.Component</span><span class="s0">;</span>
+
+<span class="s1">@Component</span>
+<span class="s0">public class </span><span class="s1">JWTokenHelper {</span>
+
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_USER_ID = </span><span class="s2">&quot;user_id&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_USERNAME = </span><span class="s2">&quot;username&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_CONTRACT_NUMBER = </span><span class="s2">&quot;contract_number&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_TOUCHPOINT = </span><span class="s2">&quot;touchpoint&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_CONTRACT_MODEL = </span><span class="s2">&quot;contract_model&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_USER_ROLE = </span><span class="s2">&quot;role&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_APP_TYPE = </span><span class="s2">&quot;app_type&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String JWT_CLAIMS_APP_NAME = </span><span class="s2">&quot;app_name&quot;</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">UserToken parseAccessToken(String token) </span><span class="s0">throws </span><span class="s1">ParseException</span><span class="s0">, </span><span class="s1">BadJOSEException</span><span class="s0">, </span><span class="s1">JOSEException {</span>
+        <span class="s1">String keySecret = </span><span class="s2">&quot;SK4kPfAVBHbmEsG25FrhSyGhFGYREW7BH7BSgeafhRo&quot;</span><span class="s0">;</span>
+        <span class="s1">JWKSet jwkSet = </span><span class="s0">new </span><span class="s1">JWKSet()</span><span class="s0">;</span>
+        <span class="s1">JWK hmacJWK = </span><span class="s0">new </span><span class="s1">OctetSequenceKey(Base64URL.encode(keySecret.getBytes())</span><span class="s0">, </span><span class="s1">KeyUse.SIGNATURE</span><span class="s0">,</span>
+                <span class="s1">Sets.newHashSet(KeyOperation.SIGN</span><span class="s0">, </span><span class="s1">KeyOperation.VERIFY)</span><span class="s0">, </span><span class="s1">JWSAlgorithm.HS256</span><span class="s0">,</span>
+                <span class="s0">null, null, null, null, null, null</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">jwkSet = </span><span class="s0">new </span><span class="s1">JWKSet(ListUtils.union(jwkSet.getKeys()</span><span class="s0">, </span><span class="s1">Collections.singletonList(hmacJWK)))</span><span class="s0">;</span>
+        <span class="s1">UserToken authContext = </span><span class="s0">new </span><span class="s1">UserToken()</span><span class="s0">;</span>
+        <span class="s1">Exception returnException = </span><span class="s0">null;</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">JWKSource keySource = </span><span class="s0">new </span><span class="s1">ImmutableJWKSet&lt;&gt;(jwkSet)</span><span class="s0">;</span>
+            <span class="s1">ConfigurableJWTProcessor jwtProcessor = </span><span class="s0">new </span><span class="s1">DefaultJWTProcessor()</span><span class="s0">;</span>
+            <span class="s1">SignedJWT signedJWT = SignedJWT.parse(token)</span><span class="s0">;</span>
+            
+            <span class="s1">JWSKeySelector keySelector = </span><span class="s0">new </span><span class="s1">JWSVerificationKeySelector(signedJWT.getHeader().getAlgorithm()</span><span class="s0">, </span><span class="s1">keySource)</span><span class="s0">;</span>
+            <span class="s1">jwtProcessor.setJWSKeySelector(keySelector)</span><span class="s0">;</span>
+            <span class="s1">SecurityContext ctx = </span><span class="s0">null;</span>
+            <span class="s1">JWTClaimsSet claimsSet = jwtProcessor.process(token</span><span class="s0">, </span><span class="s1">ctx)</span><span class="s0">;</span>
+            <span class="s1">authContext.setTokenId(claimsSet.getJWTID())</span><span class="s0">;</span>
+            <span class="s1">authContext.setUserId(claimsSet.getStringClaim(JWT_CLAIMS_USER_ID))</span><span class="s0">;</span>
+            <span class="s1">authContext.setUsername(claimsSet.getStringClaim(JWT_CLAIMS_USERNAME))</span><span class="s0">;</span>
+            <span class="s1">authContext.setUserRole(claimsSet.getStringClaim(JWT_CLAIMS_USER_ROLE))</span><span class="s0">;</span>
+            <span class="s1">authContext.setContractNumber(claimsSet.getStringClaim(JWT_CLAIMS_CONTRACT_NUMBER))</span><span class="s0">;</span>
+            <span class="s1">authContext.setTouchpoint(claimsSet.getStringClaim(JWT_CLAIMS_TOUCHPOINT))</span><span class="s0">;</span>
+            <span class="s1">authContext.setContractModel(claimsSet.getStringClaim(JWT_CLAIMS_CONTRACT_MODEL))</span><span class="s0">;</span>
+            <span class="s1">authContext.setApplicationType(claimsSet.getStringClaim(JWT_CLAIMS_APP_TYPE))</span><span class="s0">;</span>
+            <span class="s1">authContext.setApplicationName(claimsSet.getStringClaim(JWT_CLAIMS_APP_NAME))</span><span class="s0">;</span>
+
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(BadJWTException e) {</span>
+            <span class="s1">returnException = </span><span class="s0">new </span><span class="s1">Exception(e.getMessage())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s1">authContext.setValidationException(returnException)</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">authContext</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

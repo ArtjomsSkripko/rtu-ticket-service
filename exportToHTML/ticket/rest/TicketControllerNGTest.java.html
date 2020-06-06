@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>TicketControllerNGTest.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TicketControllerNGTest.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.rest</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Collections</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.testng.annotations.BeforeClass</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.testng.annotations.Test</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.exception.UnauthorizedException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.mapper.OfferMapper</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.JourneyOfferDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.service.TicketService</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">org.mockito.Mockito.mock</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">TicketControllerNGTest {</span>
+
+    <span class="s0">private static </span><span class="s1">TicketService service</span><span class="s0">;</span>
+    <span class="s0">private static </span><span class="s1">OfferMapper mapper</span><span class="s0">;</span>
+    <span class="s0">private static </span><span class="s1">TicketController controller</span><span class="s0">;</span>
+
+    <span class="s1">@BeforeClass</span>
+    <span class="s0">public static void </span><span class="s1">initiate() {</span>
+        <span class="s1">mapper = mock(OfferMapper.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">service = mock(TicketService.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">controller = </span><span class="s0">new </span><span class="s1">TicketController(service</span><span class="s0">, </span><span class="s1">mapper)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Test(expectedExceptions = UnauthorizedException.</span><span class="s0">class</span><span class="s1">)</span>
+    <span class="s0">public void </span><span class="s1">testGetOffersUnauthorized() {</span>
+        <span class="s1">JourneyOfferDTO offerDTO = </span><span class="s0">new </span><span class="s1">JourneyOfferDTO()</span><span class="s0">;</span>
+        <span class="s1">controller.reserveTicket(Collections.singletonList(offerDTO))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

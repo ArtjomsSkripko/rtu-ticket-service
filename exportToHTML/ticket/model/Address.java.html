@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>Address.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Address.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.model</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.EqualsBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.HashCodeBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringStyle</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Address {</span>
+
+    <span class="s0">private </span><span class="s1">String streetName</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String homeNumber</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String city</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">Address(String city) {</span>
+        <span class="s0">this</span><span class="s1">.city = city</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Address() {</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getStreetName() {</span>
+        <span class="s0">return </span><span class="s1">streetName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setStreetName(String streetName) {</span>
+        <span class="s0">this</span><span class="s1">.streetName = streetName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getHomeNumber() {</span>
+        <span class="s0">return </span><span class="s1">homeNumber</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setHomeNumber(String homeNumber) {</span>
+        <span class="s0">this</span><span class="s1">.homeNumber = homeNumber</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getCity() {</span>
+        <span class="s0">return </span><span class="s1">city</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCity(String city) {</span>
+        <span class="s0">this</span><span class="s1">.city = city</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/* Equals &amp; HashCode */</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">equals(</span><span class="s0">final </span><span class="s1">Object other) {</span>
+        <span class="s0">if </span><span class="s1">(</span><span class="s0">this </span><span class="s1">== other) {</span>
+            <span class="s0">return true;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">if </span><span class="s1">(other == </span><span class="s0">null </span><span class="s1">|| getClass() != other.getClass()) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">Address castOther = (Address) other</span><span class="s0">;</span>
+
+        <span class="s0">return new </span><span class="s1">EqualsBuilder()</span>
+                <span class="s1">.append(streetName</span><span class="s0">, </span><span class="s1">castOther.streetName)</span>
+                <span class="s1">.append(homeNumber</span><span class="s0">, </span><span class="s1">castOther.homeNumber)</span>
+                <span class="s1">.append(city</span><span class="s0">, </span><span class="s1">castOther.city)</span>
+                <span class="s1">.isEquals()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">hashCode() {</span>
+        <span class="s0">return new </span><span class="s1">HashCodeBuilder()</span>
+                <span class="s1">.append(streetName)</span>
+                <span class="s1">.append(homeNumber)</span>
+                <span class="s1">.append(city)</span>
+                <span class="s1">.toHashCode()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return new </span><span class="s1">ToStringBuilder(</span><span class="s0">this, </span><span class="s1">ToStringStyle.SHORT_PREFIX_STYLE)</span>
+                <span class="s1">.append(</span><span class="s3">&quot;streetName&quot;</span><span class="s0">, </span><span class="s1">streetName)</span>
+                <span class="s1">.append(</span><span class="s3">&quot;homeNumber&quot;</span><span class="s0">, </span><span class="s1">homeNumber)</span>
+                <span class="s1">.append(</span><span class="s3">&quot;city&quot;</span><span class="s0">, </span><span class="s1">city)</span>
+                <span class="s1">.toString()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

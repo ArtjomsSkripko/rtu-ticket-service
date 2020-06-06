@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="NG tests">
+    <test name="NG">
+        <packages>
+            <package name="ticket.exception"/>
+            <package name="ticket.mapper"/>
+            <package name="ticket.repository"/>
+            <package name="ticket.service"/>
+            <package name="ticket.rest"/>
+        </packages>
+    </test>
+</suite>

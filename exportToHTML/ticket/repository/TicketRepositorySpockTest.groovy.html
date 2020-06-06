@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>TicketRepositorySpockTest.groovy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TicketRepositorySpockTest.groovy</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.repository</span>
+
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.namedparam.MapSqlParameterSource</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.simple.SimpleJdbcInsert</span>
+<span class="s0">import </span><span class="s1">org.springframework.test.util.ReflectionTestUtils</span>
+<span class="s0">import </span><span class="s1">spock.lang.Specification</span>
+<span class="s0">import </span><span class="s1">ticket.exception.OfferAlreadyUsedException</span>
+
+<span class="s0">import </span><span class="s1">javax.sql.DataSource</span>
+
+<span class="s0">class </span><span class="s1">TicketRepositorySpockTest </span><span class="s0">extends </span><span class="s1">Specification {</span>
+
+    <span class="s1">TicketRepository repository</span>
+    <span class="s1">NamedParameterJdbcOperations namedJdbcTemplate</span>
+    <span class="s1">SimpleJdbcInsert simpleJdbcInsert</span>
+
+    <span class="s0">def </span><span class="s1">setup() {</span>
+        <span class="s1">namedJdbcTemplate = Mock(NamedParameterJdbcOperations.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">DataSource dataSource = Mock(DataSource.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">simpleJdbcInsert = Mock(SimpleJdbcInsert.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">repository = </span><span class="s0">new </span><span class="s1">TicketRepository(namedJdbcTemplate, dataSource)</span>
+        <span class="s1">ReflectionTestUtils.setField(repository, </span><span class="s2">&quot;insertTicketTmpl&quot;</span><span class="s1">, simpleJdbcInsert, SimpleJdbcInsert.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">ReflectionTestUtils.setField(repository, </span><span class="s2">&quot;namedJdbcTemplate&quot;</span><span class="s1">, namedJdbcTemplate, NamedParameterJdbcOperations.</span><span class="s0">class</span><span class="s1">)</span>
+    <span class="s1">}</span>
+
+    <span class="s0">void </span><span class="s2">&quot;call validate offer ids when exception is thrown&quot;</span><span class="s1">() {</span>
+        <span class="s1">given:</span>
+        <span class="s1">namedJdbcTemplate.queryForObject(_ </span><span class="s0">as </span><span class="s1">String, _ </span><span class="s0">as </span><span class="s1">MapSqlParameterSource, Integer.</span><span class="s0">class</span><span class="s1">) &gt;&gt; </span><span class="s3">1</span>
+        <span class="s1">when:</span>
+        <span class="s1">repository.validateOfferIds([</span><span class="s2">&quot;test&quot;</span><span class="s1">])</span>
+        <span class="s1">then:</span>
+        <span class="s1">thrown(OfferAlreadyUsedException.</span><span class="s0">class</span><span class="s1">)</span>
+    <span class="s1">}</span>
+
+    <span class="s0">void </span><span class="s2">&quot;call validate offer ids &quot;</span><span class="s1">() {</span>
+        <span class="s1">given:</span>
+        <span class="s1">namedJdbcTemplate.queryForObject(_ </span><span class="s0">as </span><span class="s1">String, _ </span><span class="s0">as </span><span class="s1">MapSqlParameterSource, Integer.</span><span class="s0">class</span><span class="s1">) &gt;&gt; </span><span class="s3">0</span>
+        <span class="s1">when:</span>
+        <span class="s1">repository.validateOfferIds([</span><span class="s2">&quot;test&quot;</span><span class="s1">])</span>
+        <span class="s1">then:</span>
+        <span class="s1">notThrown(OfferAlreadyUsedException.</span><span class="s0">class</span><span class="s1">)</span>
+    <span class="s1">}</span>
+
+    <span class="s0">void </span><span class="s2">&quot;call save tickets &quot;</span><span class="s1">() {</span>
+        <span class="s1">given:</span>
+        <span class="s1">simpleJdbcInsert.executeBatch(_ </span><span class="s0">as </span><span class="s1">MapSqlParameterSource[]) &gt;&gt; [</span><span class="s3">1</span><span class="s1">]</span>
+        <span class="s1">when:</span>
+        <span class="s1">repository.validateOfferIds([</span><span class="s2">&quot;test&quot;</span><span class="s1">])</span>
+        <span class="s1">then:</span>
+        <span class="s1">noExceptionThrown()</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>RegionalOfferPerformerNGTest.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RegionalOfferPerformerNGTest.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.service</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Collections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.mockito.Mockito</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.test.util.ReflectionTestUtils</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.testng.Assert</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.testng.annotations.BeforeSuite</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.testng.annotations.Test</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.builders.AddressBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.builders.RegionalOfferDTOBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.StatusEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.mapper.OfferMapper</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Address</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Ticket</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.repository.TicketRepository</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.AddressDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.RegionalOfferDTO</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">org.mockito.Matchers.anyListOf</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">org.mockito.Mockito.mock</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">org.mockito.Mockito.when</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">RegionalOfferPerformerNGTest {</span>
+
+    <span class="s0">private static </span><span class="s1">RegionalOfferPerformer regionalOfferPerformer</span><span class="s0">;</span>
+    <span class="s0">private static </span><span class="s1">TicketRepository repository</span><span class="s0">;</span>
+    <span class="s0">private static </span><span class="s1">OfferMapper mapper</span><span class="s0">;</span>
+
+    <span class="s1">@BeforeSuite</span>
+    <span class="s0">public static void </span><span class="s1">initiate() </span><span class="s0">throws </span><span class="s1">Exception {</span>
+        <span class="s1">repository = mock(TicketRepository.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mapper = mock(OfferMapper.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">regionalOfferPerformer = </span><span class="s0">new </span><span class="s1">RegionalOfferPerformer()</span><span class="s0">;</span>
+        <span class="s1">ReflectionTestUtils.setField(regionalOfferPerformer</span><span class="s0">, </span><span class="s2">&quot;repository&quot;</span><span class="s0">, </span><span class="s1">repository</span><span class="s0">, </span><span class="s1">TicketRepository.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">ReflectionTestUtils.setField(regionalOfferPerformer</span><span class="s0">, </span><span class="s2">&quot;mapper&quot;</span><span class="s0">, </span><span class="s1">mapper</span><span class="s0">, </span><span class="s1">OfferMapper.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Test</span>
+    <span class="s0">public void </span><span class="s1">testBuildTicket() {</span>
+        <span class="s1">RegionalOfferDTO offer = </span><span class="s0">new </span><span class="s1">RegionalOfferDTOBuilder().withDefaults().build()</span><span class="s0">;</span>
+        <span class="s1">Address address = </span><span class="s0">new </span><span class="s1">AddressBuilder().withDefaults().build()</span><span class="s0">;</span>
+        <span class="s1">when(mapper.toDomainAddress(Mockito.any(AddressDTO.</span><span class="s0">class</span><span class="s1">))).thenReturn(address)</span><span class="s0">;</span>
+
+        <span class="s1">List&lt;Ticket&gt; resultList = regionalOfferPerformer.buildTickets(Collections.singletonList(offer))</span><span class="s0">;</span>
+
+        <span class="s1">Ticket result = resultList.get(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">Assert.assertNotNull(result)</span><span class="s0">;</span>
+        <span class="s1">Assert.assertNotNull(result.getTicketId())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertNotNull(result.getValidUntil())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getOfferId()</span><span class="s0">, </span><span class="s1">offer.getId())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getAddressFrom()</span><span class="s0">, </span><span class="s1">address)</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getAddressTo()</span><span class="s0">, </span><span class="s1">address)</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getCompanyName()</span><span class="s0">, </span><span class="s1">offer.getCompanyName())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getDiscount()</span><span class="s0">, </span><span class="s1">offer.getDiscount())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getPassenger().name()</span><span class="s0">, </span><span class="s1">offer.getPassenger())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getPriceWithoutDiscount().toString()</span><span class="s0">, </span><span class="s1">offer.getOriginalPrice())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getPriceWithDiscount().toPlainString()</span><span class="s0">, </span><span class="s1">offer.getPriceWithDiscount())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getDiscount()</span><span class="s0">, </span><span class="s1">offer.getDiscount())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getTransportTypes()</span><span class="s0">, </span><span class="s1">offer.getTransportTypes())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(result.getStatus()</span><span class="s0">, </span><span class="s1">StatusEnum.NOT_ACTIVE)</span><span class="s0">;</span>
+
+        <span class="s1">Mockito.verify(repository</span><span class="s0">, </span><span class="s1">Mockito.times(</span><span class="s3">1</span><span class="s1">)).saveTickets(anyListOf(Ticket.</span><span class="s0">class</span><span class="s1">))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

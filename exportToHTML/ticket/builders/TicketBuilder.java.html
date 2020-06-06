@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>TicketBuilder.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TicketBuilder.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.builders</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.math.BigDecimal</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZoneId</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Collections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">ticket.enumeration.OfferTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.PassengerTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.StatusEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.TransportTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Address</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Ticket</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.AddressDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.IntercityOfferDTO</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">TicketBuilder {</span>
+
+    <span class="s0">private </span><span class="s1">Ticket template</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder() {</span>
+        <span class="s0">this</span><span class="s1">.template = </span><span class="s0">new </span><span class="s1">Ticket()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder ticketId(String ticketId) {</span>
+        <span class="s1">template.setTicketId(ticketId)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder offerId(String offerId) {</span>
+        <span class="s1">template.setOfferId(offerId)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder userId(String userId) {</span>
+        <span class="s1">template.setUserId(userId)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder type(OfferTypeEnum type) {</span>
+        <span class="s1">template.setType(type)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder status(StatusEnum status) {</span>
+        <span class="s1">template.setStatus(status)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder numberOfLuggage(Integer numberOfLuggage) {</span>
+        <span class="s1">template.setNumberOfLuggage(numberOfLuggage)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder passenger(PassengerTypeEnum passenger) {</span>
+        <span class="s1">template.setPassenger(passenger)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder placeType(String placeType) {</span>
+        <span class="s1">template.setPlaceType(placeType)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder priceWithDiscount(BigDecimal priceWithDiscount) {</span>
+        <span class="s1">template.setPriceWithDiscount(priceWithDiscount)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder priceWithoutDiscount(BigDecimal priceWithoutDiscount) {</span>
+        <span class="s1">template.setPriceWithoutDiscount(priceWithoutDiscount)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder taxRate(String taxRate) {</span>
+        <span class="s1">template.setTaxRate(taxRate)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder discount(String discount) {</span>
+        <span class="s1">template.setDiscount(discount)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder transportTypes(List&lt;String&gt; transportType) {</span>
+        <span class="s1">template.setTransportTypes(transportType)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder companyName(String companyName) {</span>
+        <span class="s1">template.setCompanyName(companyName)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder addressFrom(Address address) {</span>
+        <span class="s1">template.setAddressFrom(address)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder addressTo(Address address) {</span>
+        <span class="s1">template.setAddressTo(address)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder depTime(ZonedDateTime depTime) {</span>
+        <span class="s1">template.setDepartureTime(depTime)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketBuilder validUntil(ZonedDateTime depTime) {</span>
+        <span class="s1">template.setValidUntil(depTime)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+
+
+    <span class="s0">public </span><span class="s1">TicketBuilder withDefaults() {</span>
+        <span class="s0">return this</span>
+                <span class="s1">.ticketId(</span><span class="s2">&quot;1234234&quot;</span><span class="s1">)</span>
+                <span class="s1">.offerId(</span><span class="s2">&quot;1231252135&quot;</span><span class="s1">)</span>
+                <span class="s1">.userId(</span><span class="s2">&quot;userId&quot;</span><span class="s1">)</span>
+                <span class="s1">.type(OfferTypeEnum.SINGLE_TICKET)</span>
+                <span class="s1">.status(StatusEnum.NOT_ACTIVE)</span>
+                <span class="s1">.numberOfLuggage(</span><span class="s3">0</span><span class="s1">)</span>
+                <span class="s1">.passenger(PassengerTypeEnum.ADULT)</span>
+                <span class="s1">.placeType(</span><span class="s2">&quot;ECO&quot;</span><span class="s1">)</span>
+                <span class="s1">.priceWithDiscount(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">10.10</span><span class="s1">))</span>
+                <span class="s1">.priceWithoutDiscount(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">10.10</span><span class="s1">))</span>
+                <span class="s1">.taxRate(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">0.10</span><span class="s1">).toString())</span>
+                <span class="s1">.discount(</span><span class="s2">&quot;1.0&quot;</span><span class="s1">)</span>
+                <span class="s1">.transportTypes(Collections.singletonList(TransportTypeEnum.BUS.name()))</span>
+                <span class="s1">.companyName(</span><span class="s2">&quot;NORDEKA&quot;</span><span class="s1">)</span>
+                <span class="s1">.addressFrom(</span><span class="s0">new </span><span class="s1">AddressBuilder().withDefaults().build())</span>
+                <span class="s1">.addressTo(</span><span class="s0">new </span><span class="s1">AddressBuilder().withDefaults().build())</span>
+                <span class="s1">.validUntil(ZonedDateTime.of(</span><span class="s3">2021</span><span class="s0">, </span><span class="s3">5</span><span class="s0">, </span><span class="s3">5</span><span class="s0">, </span><span class="s3">12</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s1">ZoneId.systemDefault()))</span>
+                <span class="s1">.depTime(ZonedDateTime.of(</span><span class="s3">2020</span><span class="s0">, </span><span class="s3">5</span><span class="s0">, </span><span class="s3">5</span><span class="s0">, </span><span class="s3">12</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s1">ZoneId.systemDefault()))</span>
+                <span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public </span><span class="s1">Ticket build() {</span>
+        <span class="s0">return </span><span class="s1">template</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

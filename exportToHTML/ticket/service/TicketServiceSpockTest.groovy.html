@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>TicketServiceSpockTest.groovy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TicketServiceSpockTest.groovy</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.service</span>
+
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.tuple.Pair</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.tuple.Triple</span>
+<span class="s0">import </span><span class="s1">spock.lang.Specification</span>
+<span class="s0">import </span><span class="s1">spock.lang.Unroll</span>
+<span class="s0">import </span><span class="s1">ticket.builders.JourneyOfferBuilder</span>
+<span class="s0">import </span><span class="s1">ticket.builders.TicketBuilder</span>
+<span class="s0">import </span><span class="s1">ticket.exception.OfferAlreadyUsedException</span>
+<span class="s0">import </span><span class="s1">ticket.model.JourneyOffer</span>
+<span class="s0">import </span><span class="s1">ticket.repository.TicketRepository</span>
+
+<span class="s0">class </span><span class="s1">TicketServiceSpockTest </span><span class="s0">extends </span><span class="s1">Specification {</span>
+
+    <span class="s1">TicketService service</span>
+    <span class="s1">TicketRepository repository</span>
+    <span class="s1">RegionalOfferPerformer regionalOfferPerformer</span>
+    <span class="s1">IntercityOfferPerformer intercityOfferPerformer</span>
+
+    <span class="s0">def </span><span class="s1">setup() {</span>
+        <span class="s1">repository = Mock(TicketRepository.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">regionalOfferPerformer = Mock(RegionalOfferPerformer.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">intercityOfferPerformer = Mock(IntercityOfferPerformer.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">service = </span><span class="s0">new </span><span class="s1">TicketService(regionalOfferPerformer, intercityOfferPerformer, repository)</span>
+    <span class="s1">}</span>
+
+    <span class="s0">void </span><span class="s2">&quot;create ticket when offers already used&quot;</span><span class="s1">() {</span>
+        <span class="s1">given:</span>
+        <span class="s1">JourneyOffer journeyOffer = </span><span class="s0">new </span><span class="s1">JourneyOfferBuilder().withDefaults().build()</span>
+
+        <span class="s1">and:</span>
+        <span class="s1">repository.validateOfferIds([</span><span class="s2">&quot;offerId1&quot;</span><span class="s1">, </span><span class="s2">&quot;offerId2&quot;</span><span class="s1">, </span><span class="s2">&quot;offerId3&quot;</span><span class="s1">]) &gt;&gt; { List&lt;String&gt; offerIds -&gt; </span><span class="s0">throw new </span><span class="s1">OfferAlreadyUsedException(</span><span class="s2">&quot;offer already in use&quot;</span><span class="s1">) }</span>
+
+        <span class="s1">when:</span>
+        <span class="s1">service.createTickets([journeyOffer])</span>
+
+        <span class="s1">then:</span>
+        <span class="s1">thrown(OfferAlreadyUsedException)</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Unroll</span>
+    <span class="s0">def </span><span class="s2">&quot;create ticket from offers #offer&quot;</span><span class="s1">() {</span>
+        <span class="s1">when:</span>
+        <span class="s1">regionalOfferPerformer.buildTickets(offer.regionalOffer != </span><span class="s0">null </span><span class="s1">? offer.regionalOffer.values() : </span><span class="s0">null</span><span class="s1">) &gt;&gt; [</span><span class="s0">new </span><span class="s1">TicketBuilder().withDefaults().ticketId(</span><span class="s2">&quot;123&quot;</span><span class="s1">).build()]</span>
+        <span class="s1">intercityOfferPerformer.buildTicket(offer.intercityOffer) &gt;&gt; </span><span class="s0">new </span><span class="s1">TicketBuilder().withDefaults().ticketId(</span><span class="s2">&quot;567&quot;</span><span class="s1">).build()</span>
+        <span class="s0">def </span><span class="s1">result = service.createTickets([offer])</span>
+        <span class="s1">then:</span>
+        <span class="s1">result.size() == expectedResult.getLeft()</span>
+        <span class="s1">result != </span><span class="s0">null</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; result.size(); i++) {</span>
+            <span class="s1">result.get(i).getTicketId() == expectedResult.getMiddle().get(i)</span>
+        <span class="s1">}</span>
+        <span class="s1">expectedResult.getRight().getLeft() * regionalOfferPerformer.buildTickets(offer.regionalOffer != </span><span class="s0">null </span><span class="s1">? offer.regionalOffer.values() : </span><span class="s0">null</span><span class="s1">) &gt;&gt; [</span><span class="s0">new </span><span class="s1">TicketBuilder().withDefaults().ticketId(</span><span class="s2">&quot;123&quot;</span><span class="s1">).build()]</span>
+        <span class="s1">expectedResult.getRight().getRight() * intercityOfferPerformer.buildTicket(offer.intercityOffer) &gt;&gt; </span><span class="s0">new </span><span class="s1">TicketBuilder().withDefaults().ticketId(</span><span class="s2">&quot;567&quot;</span><span class="s1">).build()</span>
+        <span class="s1">where:</span>
+        <span class="s1">offer                                                                 || expectedResult</span>
+        <span class="s0">new </span><span class="s1">JourneyOfferBuilder().withDefaults().build()                      || Triple.of(</span><span class="s3">2</span><span class="s1">, [</span><span class="s2">&quot;123&quot;</span><span class="s1">, </span><span class="s2">&quot;567&quot;</span><span class="s1">], Pair.of(</span><span class="s3">1</span><span class="s1">, </span><span class="s3">1</span><span class="s1">))</span>
+        <span class="s0">new </span><span class="s1">JourneyOfferBuilder().withDefaults().regionalOffer(</span><span class="s0">null</span><span class="s1">).build()  || Triple.of(</span><span class="s3">1</span><span class="s1">, Collections.singletonList(</span><span class="s2">&quot;567&quot;</span><span class="s1">), Pair.of(</span><span class="s3">0</span><span class="s1">, </span><span class="s3">1</span><span class="s1">))</span>
+        <span class="s0">new </span><span class="s1">JourneyOfferBuilder().withDefaults().intercityOffer(</span><span class="s0">null</span><span class="s1">).build() || Triple.of(</span><span class="s3">1</span><span class="s1">, Collections.singletonList(</span><span class="s2">&quot;123&quot;</span><span class="s1">), Pair.of(</span><span class="s3">1</span><span class="s1">, </span><span class="s3">0</span><span class="s1">))</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>RegionalOfferDTOBuilder.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RegionalOfferDTOBuilder.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">configs.steps</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.math.BigDecimal</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.math.MathContext</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Arrays</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Collections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">ticket.enumeration.OfferTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.PassengerTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.TransportTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.AddressDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.RegionalOfferDTO</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">RegionalOfferDTOBuilder {</span>
+
+    <span class="s0">private </span><span class="s1">RegionalOfferDTO template</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder() {</span>
+        <span class="s0">this</span><span class="s1">.template = </span><span class="s0">new </span><span class="s1">RegionalOfferDTO()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder addressFrom(AddressDTO address) {</span>
+        <span class="s1">template.setAddressFrom(address)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder addressTo(AddressDTO address) {</span>
+        <span class="s1">template.setAddressTo(address)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder passenger(String passenger) {</span>
+        <span class="s1">template.setPassenger(passenger)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder offerType(String offerType) {</span>
+        <span class="s1">template.setOfferType(offerType)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder priceWithDiscount(String priceWithDiscount) {</span>
+        <span class="s1">template.setPriceWithDiscount(priceWithDiscount)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder originalPrice(String originalPrice) {</span>
+        <span class="s1">template.setOriginalPrice(originalPrice)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder taxRate(String taxRate) {</span>
+        <span class="s1">template.setTaxRate(taxRate)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder discount(String discount) {</span>
+        <span class="s1">template.setDiscount(discount)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder routeNumbers(List&lt;String&gt; routeNumber) {</span>
+        <span class="s1">template.setRouteNumbers(routeNumber)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder transportTypes(List&lt;String&gt; transportTypes) {</span>
+        <span class="s1">template.setTransportTypes(transportTypes)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder companyName(String companyName) {</span>
+        <span class="s1">template.setCompanyName(companyName)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder id(String id) {</span>
+        <span class="s1">template.setId(id)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder city(String city) {</span>
+        <span class="s1">template.setCity(city)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder numberOfTickets(Integer numberOfTickets) {</span>
+        <span class="s1">template.setNumberOfTickets(numberOfTickets)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTOBuilder withDefaults() {</span>
+        <span class="s0">return this</span>
+                <span class="s1">.id(</span><span class="s2">&quot;offerId2&quot;</span><span class="s1">)</span>
+                <span class="s1">.addressFrom(</span><span class="s0">new </span><span class="s1">AddressDTOBuilder().withDefaults().build())</span>
+                <span class="s1">.passenger(PassengerTypeEnum.ADULT.name())</span>
+                <span class="s1">.numberOfTickets(</span><span class="s3">1</span><span class="s1">)</span>
+                <span class="s1">.offerType(OfferTypeEnum.SINGLE_TICKET.name())</span>
+                <span class="s1">.taxRate(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">23.00</span><span class="s1">).round(</span><span class="s0">new </span><span class="s1">MathContext(</span><span class="s3">3</span><span class="s1">)).toPlainString())</span>
+                <span class="s1">.originalPrice(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">10.10</span><span class="s1">).round(</span><span class="s0">new </span><span class="s1">MathContext(</span><span class="s3">3</span><span class="s1">)).toPlainString())</span>
+                <span class="s1">.priceWithDiscount(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">10.10</span><span class="s1">).round(</span><span class="s0">new </span><span class="s1">MathContext(</span><span class="s3">3</span><span class="s1">)).toPlainString())</span>
+                <span class="s1">.routeNumbers(Arrays.asList(</span><span class="s2">&quot;5&quot;</span><span class="s0">, </span><span class="s2">&quot;6&quot;</span><span class="s1">))</span>
+                <span class="s1">.transportTypes(Collections.singletonList(TransportTypeEnum.BUS.name()))</span>
+                <span class="s1">.companyName(</span><span class="s2">&quot;RIGAS_SATIKSME&quot;</span><span class="s1">)</span>
+                <span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public </span><span class="s1">RegionalOfferDTO build() {</span>
+        <span class="s0">return </span><span class="s1">template</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

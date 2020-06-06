@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>tickets_create.story</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #cc7832;}
+.s2 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+tickets_create.story</font>
+</center></td></tr></table>
+<pre><span class="s0">Scenario: Create intercity tickets</span>
+<span class="s1">Given </span><span class="s2">1 journey offer(s) from RIGA to DAUGAVPILS</span>
+<span class="s1">And </span><span class="s2">add intercity offer to 1 journey wrapper</span>
+<span class="s1">When </span><span class="s2">call create tickets</span>
+<span class="s1">Then </span><span class="s2">response status is OK</span>
+<span class="s1">Then </span><span class="s2">response has 1 ticket(s)</span>
+<span class="s1">Then </span><span class="s2">1 ticket has route from RIGA to DAUGAVPILS</span>
+
+<span class="s0">Scenario: Create regional tickets</span>
+<span class="s1">Given </span><span class="s2">1 journey offer(s) from RIGA to RIGA</span>
+<span class="s1">Given </span><span class="s2">add RIGA regional offer to 1 journey wrapper</span>
+<span class="s1">When </span><span class="s2">call create tickets</span>
+<span class="s1">Then </span><span class="s2">response status is OK</span>
+<span class="s1">Then </span><span class="s2">response has 1 ticket(s)</span>
+<span class="s1">Then </span><span class="s2">1 ticket has route from RIGA to RIGA</span>
+
+<span class="s0">Scenario: Create mixed tickets</span>
+<span class="s1">Given </span><span class="s2">1 journey offer(s) from RIGA to DAUGAVPILS</span>
+<span class="s1">And </span><span class="s2">add RIGA regional offer to 1 journey wrapper</span>
+<span class="s1">And </span><span class="s2">add DAUGAVPILS regional offer to 1 journey wrapper</span>
+<span class="s1">And </span><span class="s2">add intercity offer to 1 journey wrapper</span>
+<span class="s1">When </span><span class="s2">call create tickets</span>
+<span class="s1">Then </span><span class="s2">response status is OK</span>
+<span class="s1">And </span><span class="s2">response has 3 ticket(s)</span>
+<span class="s1">And </span><span class="s2">1 ticket has route from RIGA to RIGA</span>
+<span class="s1">And </span><span class="s2">2 ticket has route from DAUGAVPILS to DAUGAVPILS</span>
+<span class="s1">And </span><span class="s2">3 ticket has route from RIGA to DAUGAVPILS</span></pre>
+</body>
+</html>

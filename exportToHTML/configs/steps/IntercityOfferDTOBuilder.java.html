@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>IntercityOfferDTOBuilder.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+IntercityOfferDTOBuilder.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">configs.steps</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.math.BigDecimal</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.math.MathContext</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZoneId</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">ticket.enumeration.PassengerTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.TransportTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.IntercityOfferDTO</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">IntercityOfferDTOBuilder {</span>
+
+    <span class="s0">private </span><span class="s1">IntercityOfferDTO template</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder() {</span>
+        <span class="s0">this</span><span class="s1">.template = </span><span class="s0">new </span><span class="s1">IntercityOfferDTO()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder depCity(String depCity) {</span>
+        <span class="s1">template.setDepCity(depCity)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder destCity(String destCity) {</span>
+        <span class="s1">template.setDestCity(destCity)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder depTime(ZonedDateTime depTime) {</span>
+        <span class="s1">template.setDepTime(depTime)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder numberOfLuggage(Integer numberOfLuggage) {</span>
+        <span class="s1">template.setNumberOfLuggage(numberOfLuggage)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder passenger(String passenger) {</span>
+        <span class="s1">template.setPassenger(passenger)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder placeType(String placeType) {</span>
+        <span class="s1">template.setPlaceType(placeType)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder priceWithDiscount(String priceWithDiscount) {</span>
+        <span class="s1">template.setPriceWithDiscount(priceWithDiscount)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder originalPrice(String originalPrice) {</span>
+        <span class="s1">template.setOriginalPrice(originalPrice)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder taxRate(String taxRate) {</span>
+        <span class="s1">template.setTaxRate(taxRate)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder discount(String discount) {</span>
+        <span class="s1">template.setDiscount(discount)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder transportType(String transportType) {</span>
+        <span class="s1">template.setTransportType(transportType)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder companyName(String companyName) {</span>
+        <span class="s1">template.setCompanyName(companyName)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder id(String id) {</span>
+        <span class="s1">template.setId(id)</span><span class="s0">;</span>
+        <span class="s0">return this;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTOBuilder withDefaults() {</span>
+        <span class="s0">return this</span>
+                <span class="s1">.depCity(</span><span class="s2">&quot;RIGA&quot;</span><span class="s1">)</span>
+                <span class="s1">.destCity(</span><span class="s2">&quot;DAUGAVPILS&quot;</span><span class="s1">)</span>
+                <span class="s1">.depTime(ZonedDateTime.of(</span><span class="s3">2020</span><span class="s0">, </span><span class="s3">5</span><span class="s0">, </span><span class="s3">5</span><span class="s0">, </span><span class="s3">12</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s1">ZoneId.systemDefault()))</span>
+                <span class="s1">.passenger(PassengerTypeEnum.ADULT.name())</span>
+                <span class="s1">.placeType(</span><span class="s2">&quot;ECO&quot;</span><span class="s1">)</span>
+                <span class="s1">.numberOfLuggage(</span><span class="s3">0</span><span class="s1">)</span>
+                <span class="s1">.taxRate(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">23.00</span><span class="s1">).toPlainString())</span>
+                <span class="s1">.originalPrice(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">10.10</span><span class="s1">).round(</span><span class="s0">new </span><span class="s1">MathContext(</span><span class="s3">3</span><span class="s1">)).toString())</span>
+                <span class="s1">.priceWithDiscount(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">10.10</span><span class="s1">).round(</span><span class="s0">new </span><span class="s1">MathContext(</span><span class="s3">3</span><span class="s1">)).toString())</span>
+                <span class="s1">.discount(</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s3">1.0</span><span class="s1">).toPlainString())</span>
+                <span class="s1">.transportType(TransportTypeEnum.BUS.name())</span>
+                <span class="s1">.companyName(</span><span class="s2">&quot;RIGAS_SATIKSME&quot;</span><span class="s1">)</span>
+                <span class="s1">.id(</span><span class="s2">&quot;offerId1&quot;</span><span class="s1">)</span>
+                <span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public </span><span class="s1">IntercityOfferDTO build() {</span>
+        <span class="s0">return </span><span class="s1">template</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

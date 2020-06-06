@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>OfferMapperNGTest.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+OfferMapperNGTest.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.mapper</span><span class="s0">;</span>
+
+
+<span class="s0">import </span><span class="s1">org.testng.Assert</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.testng.annotations.Test</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.builders.JourneyOfferDTOBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.builders.TicketBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.JourneyOffer</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Ticket</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.JourneyOfferDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.TicketDTO</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">OfferMapperNGTest {</span>
+
+    <span class="s0">private </span><span class="s1">OfferMapper mapper = </span><span class="s0">new </span><span class="s1">OfferMapper()</span><span class="s0">;</span>
+
+    <span class="s1">@Test</span>
+    <span class="s0">public void </span><span class="s1">testToDomainOffer() {</span>
+        <span class="s1">JourneyOfferDTO input = </span><span class="s0">new </span><span class="s1">JourneyOfferDTOBuilder().withDefaults().build()</span><span class="s0">;</span>
+
+        <span class="s1">JourneyOffer output = mapper.toDomainOffer(input)</span><span class="s0">;</span>
+
+        <span class="s1">Assert.assertNotNull(output)</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressFrom().getCity()</span><span class="s0">, </span><span class="s1">input.getAddressFrom().getCity())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressFrom().getStreetName()</span><span class="s0">, </span><span class="s1">input.getAddressFrom().getStreetName())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressFrom().getHomeNumber()</span><span class="s0">, </span><span class="s1">input.getAddressFrom().getHomeNumber())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressTo().getCity()</span><span class="s0">, </span><span class="s1">input.getAddressTo().getCity())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressTo().getStreetName()</span><span class="s0">, </span><span class="s1">input.getAddressTo().getStreetName())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressTo().getHomeNumber()</span><span class="s0">, </span><span class="s1">input.getAddressTo().getHomeNumber())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getDepartureTime()</span><span class="s0">, </span><span class="s1">input.getDepartureTime())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getIntercityOffer()</span><span class="s0">, </span><span class="s1">input.getIntercityOffer())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getRegionalOffer()</span><span class="s0">, </span><span class="s1">input.getRegionalOffers())</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Test</span>
+    <span class="s0">public void </span><span class="s1">testToTicketDTO() {</span>
+        <span class="s1">Ticket input = </span><span class="s0">new </span><span class="s1">TicketBuilder().withDefaults().build()</span><span class="s0">;</span>
+
+        <span class="s1">TicketDTO output = mapper.toDTOTicket(input)</span><span class="s0">;</span>
+
+        <span class="s1">Assert.assertNotNull(output)</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressFrom().getCity()</span><span class="s0">, </span><span class="s1">input.getAddressFrom().getCity())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressFrom().getStreetName()</span><span class="s0">, </span><span class="s1">input.getAddressFrom().getStreetName())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressFrom().getHomeNumber()</span><span class="s0">, </span><span class="s1">input.getAddressFrom().getHomeNumber())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressTo().getCity()</span><span class="s0">, </span><span class="s1">input.getAddressTo().getCity())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressTo().getStreetName()</span><span class="s0">, </span><span class="s1">input.getAddressTo().getStreetName())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getAddressTo().getHomeNumber()</span><span class="s0">, </span><span class="s1">input.getAddressTo().getHomeNumber())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getDepartureTime()</span><span class="s0">, </span><span class="s1">input.getDepartureTime().toString())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getCompanyName()</span><span class="s0">, </span><span class="s1">input.getCompanyName())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getPriceWithDiscount()</span><span class="s0">, </span><span class="s1">input.getPriceWithDiscount().toPlainString())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getPriceWithoutDiscount()</span><span class="s0">, </span><span class="s1">input.getPriceWithoutDiscount().toPlainString())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getDiscount()</span><span class="s0">, </span><span class="s1">input.getDiscount())</span><span class="s0">;</span>
+        <span class="s1">Assert.assertEquals(output.getPassenger()</span><span class="s0">, </span><span class="s1">input.getPassenger().name())</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

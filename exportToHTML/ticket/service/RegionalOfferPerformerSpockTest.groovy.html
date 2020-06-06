@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>RegionalOfferPerformerSpockTest.groovy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RegionalOfferPerformerSpockTest.groovy</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.service</span>
+
+<span class="s0">import </span><span class="s1">org.springframework.test.util.ReflectionTestUtils</span>
+<span class="s0">import </span><span class="s1">spock.lang.Specification</span>
+<span class="s0">import </span><span class="s1">ticket.builders.AddressBuilder</span>
+<span class="s0">import </span><span class="s1">ticket.builders.IntercityOfferDTOBuilder</span>
+<span class="s0">import </span><span class="s1">ticket.builders.RegionalOfferDTOBuilder</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.StatusEnum</span>
+<span class="s0">import </span><span class="s1">ticket.mapper.OfferMapper</span>
+<span class="s0">import </span><span class="s1">ticket.model.Address</span>
+<span class="s0">import </span><span class="s1">ticket.repository.TicketRepository</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.AddressDTO</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.IntercityOfferDTO</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.RegionalOfferDTO</span>
+
+<span class="s0">class </span><span class="s1">RegionalOfferPerformerSpockTest </span><span class="s0">extends </span><span class="s1">Specification {</span>
+
+    <span class="s1">RegionalOfferPerformer regionalOfferPerformer</span>
+    <span class="s1">TicketRepository repository</span>
+    <span class="s1">OfferMapper mapper</span>
+
+    <span class="s0">def </span><span class="s1">setup() {</span>
+        <span class="s1">repository = Mock(TicketRepository.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">mapper = Mock(OfferMapper.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">regionalOfferPerformer = </span><span class="s0">new </span><span class="s1">RegionalOfferPerformer()</span>
+        <span class="s1">ReflectionTestUtils.setField(regionalOfferPerformer, </span><span class="s2">&quot;repository&quot;</span><span class="s1">, repository, TicketRepository.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">ReflectionTestUtils.setField(regionalOfferPerformer, </span><span class="s2">&quot;mapper&quot;</span><span class="s1">, mapper, OfferMapper.</span><span class="s0">class</span><span class="s1">)</span>
+    <span class="s1">}</span>
+
+    <span class="s0">void </span><span class="s2">&quot;build ticket from regional offer&quot;</span><span class="s1">() {</span>
+        <span class="s1">given:</span>
+        <span class="s1">RegionalOfferDTO offer = </span><span class="s0">new </span><span class="s1">RegionalOfferDTOBuilder().withDefaults().build()</span>
+        <span class="s1">Address address = </span><span class="s0">new </span><span class="s1">AddressBuilder().withDefaults().build()</span>
+
+        <span class="s1">and:</span>
+        <span class="s1">mapper.toDomainAddress(offer.getAddressFrom()) &gt;&gt; address</span>
+        <span class="s1">mapper.toDomainAddress(offer.getAddressTo()) &gt;&gt; address</span>
+        <span class="s1">when:</span>
+        <span class="s0">def </span><span class="s1">resultList = regionalOfferPerformer.buildTickets([offer])</span>
+
+        <span class="s1">then:</span>
+        <span class="s0">def </span><span class="s1">result = resultList.get(</span><span class="s3">0</span><span class="s1">)</span>
+        <span class="s1">result != </span><span class="s0">null</span>
+        <span class="s1">result.getTicketId() != </span><span class="s0">null</span>
+        <span class="s1">result.getValidUntil() != </span><span class="s0">null</span>
+        <span class="s1">result.getOfferId() == offer.getId()</span>
+        <span class="s1">result.getAddressFrom() == address</span>
+        <span class="s1">result.getAddressTo() == address</span>
+        <span class="s1">result.getCompanyName() == offer.getCompanyName()</span>
+        <span class="s1">result.getDiscount() == offer.getDiscount()</span>
+        <span class="s1">result.getPassenger().name() == offer.getPassenger()</span>
+        <span class="s1">result.getPriceWithoutDiscount().toString() == offer.getOriginalPrice()</span>
+        <span class="s1">result.getPriceWithDiscount().toPlainString() == offer.getPriceWithDiscount()</span>
+        <span class="s1">result.getDiscount() == offer.getDiscount()</span>
+        <span class="s1">result.getTransportTypes() == offer.getTransportTypes()</span>
+        <span class="s1">result.getStatus() == StatusEnum.NOT_ACTIVE</span>
+
+        <span class="s3">1 </span><span class="s1">* repository.saveTickets(*_)</span>
+    <span class="s1">}</span>
+
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

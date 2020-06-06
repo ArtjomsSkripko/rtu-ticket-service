@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>tickets_create.feature</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #a9b7c6;}
+.s3 { color: #bbb529;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+tickets_create.feature</font>
+</center></td></tr></table>
+<pre><span class="s0">Feature</span><span class="s1">: </span><span class="s2">Ticket creation</span>
+
+  <span class="s3">@Offer</span>
+  <span class="s0">Scenario</span><span class="s1">: </span><span class="s2">Create intercity tickets</span>
+    <span class="s0">Given </span><span class="s2">1 journey offer from RIGA to DAUGAVPILS</span>
+    <span class="s0">And </span><span class="s2">add intercity offer to 1 journey wrapper</span>
+    <span class="s0">When </span><span class="s2">call create tickets</span>
+    <span class="s0">Then </span><span class="s2">response status is OK</span>
+    <span class="s0">And </span><span class="s2">response has 1 ticket</span>
+    <span class="s0">And </span><span class="s2">1 ticket has route from RIGA to DAUGAVPILS</span>
+
+  <span class="s3">@Offer</span>
+  <span class="s0">Scenario</span><span class="s1">: </span><span class="s2">Create regional tickets</span>
+    <span class="s0">Given </span><span class="s2">1 journey offer from RIGA to RIGA</span>
+    <span class="s0">And </span><span class="s2">add RIGA regional offer to 1 journey wrapper</span>
+    <span class="s0">When </span><span class="s2">call create tickets</span>
+    <span class="s0">Then </span><span class="s2">response status is OK</span>
+    <span class="s0">And </span><span class="s2">response has 1 ticket</span>
+    <span class="s0">And </span><span class="s2">1 ticket has route from RIGA to RIGA</span>
+
+  <span class="s3">@Offer</span>
+  <span class="s0">Scenario</span><span class="s1">: </span><span class="s2">Create mixed tickets</span>
+    <span class="s0">Given </span><span class="s2">1 journey offer from RIGA to DAUGAVPILS</span>
+      <span class="s0">And </span><span class="s2">add RIGA regional offer to 1 journey wrapper</span>
+      <span class="s0">And </span><span class="s2">add DAUGAVPILS regional offer to 1 journey wrapper</span>
+      <span class="s0">And </span><span class="s2">add intercity offer to 1 journey wrapper</span>
+    <span class="s0">When </span><span class="s2">call create tickets</span>
+    <span class="s0">Then </span><span class="s2">response status is OK</span>
+      <span class="s0">And </span><span class="s2">response has 3 tickets</span>
+      <span class="s0">And </span><span class="s2">1 ticket has route from RIGA to RIGA</span>
+      <span class="s0">And </span><span class="s2">2 ticket has route from DAUGAVPILS to DAUGAVPILS</span>
+      <span class="s0">And </span><span class="s2">3 ticket has route from RIGA to DAUGAVPILS</span></pre>
+</body>
+</html>

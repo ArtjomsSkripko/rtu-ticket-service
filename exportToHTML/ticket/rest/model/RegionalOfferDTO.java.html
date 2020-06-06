@@ -1,0 +1,213 @@
+<html>
+<head>
+<title>RegionalOfferDTO.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RegionalOfferDTO.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.rest.model</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.math.BigDecimal</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Objects</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.EqualsBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.HashCodeBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringStyle</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">RegionalOfferDTO {</span>
+
+    <span class="s0">private </span><span class="s1">String id</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String offerType</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String companyName</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String passenger</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">List&lt;String&gt; transportTypes</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String taxRate</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">List&lt;String&gt; routeNumbers</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String city</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">AddressDTO addressFrom</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">AddressDTO addressTo</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String discount</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String originalPrice</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String priceWithDiscount</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Integer numberOfTickets</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">RegionalOfferDTO() {</span>
+        <span class="s2">// default constructor</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getId() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setId(String id) {</span>
+        <span class="s0">this</span><span class="s1">.id = id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getOfferType() {</span>
+        <span class="s0">return </span><span class="s1">offerType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setOfferType(String offerType) {</span>
+        <span class="s0">this</span><span class="s1">.offerType = offerType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getCompanyName() {</span>
+        <span class="s0">return </span><span class="s1">companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCompanyName(String companyName) {</span>
+        <span class="s0">this</span><span class="s1">.companyName = companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPassenger() {</span>
+        <span class="s0">return </span><span class="s1">passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPassenger(String passenger) {</span>
+        <span class="s0">this</span><span class="s1">.passenger = passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">List&lt;String&gt; getTransportTypes() {</span>
+        <span class="s0">return </span><span class="s1">transportTypes</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTransportTypes(List&lt;String&gt; transportTypes) {</span>
+        <span class="s0">this</span><span class="s1">.transportTypes = transportTypes</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getDiscount() {</span>
+        <span class="s0">return </span><span class="s1">discount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDiscount(String discount) {</span>
+        <span class="s0">this</span><span class="s1">.discount = discount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getOriginalPrice() {</span>
+        <span class="s0">return </span><span class="s1">originalPrice</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setOriginalPrice(String originalPrice) {</span>
+        <span class="s0">this</span><span class="s1">.originalPrice = originalPrice</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPriceWithDiscount() {</span>
+        <span class="s0">return </span><span class="s1">priceWithDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPriceWithDiscount(String priceWithDiscount) {</span>
+        <span class="s0">this</span><span class="s1">.priceWithDiscount = priceWithDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">equals(Object o) {</span>
+        <span class="s0">if </span><span class="s1">(</span><span class="s0">this </span><span class="s1">== o) </span><span class="s0">return true;</span>
+        <span class="s0">if </span><span class="s1">(o == </span><span class="s0">null </span><span class="s1">|| getClass() != o.getClass()) </span><span class="s0">return false;</span>
+        <span class="s1">RegionalOfferDTO that = (RegionalOfferDTO) o</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">Objects.equals(id</span><span class="s0">, </span><span class="s1">that.id) &amp;&amp;</span>
+                <span class="s1">Objects.equals(offerType</span><span class="s0">, </span><span class="s1">that.offerType) &amp;&amp;</span>
+                <span class="s1">Objects.equals(companyName</span><span class="s0">, </span><span class="s1">that.companyName) &amp;&amp;</span>
+                <span class="s1">Objects.equals(passenger</span><span class="s0">, </span><span class="s1">that.passenger) &amp;&amp;</span>
+                <span class="s1">Objects.equals(transportTypes</span><span class="s0">, </span><span class="s1">that.transportTypes) &amp;&amp;</span>
+                <span class="s1">Objects.equals(taxRate</span><span class="s0">, </span><span class="s1">that.taxRate) &amp;&amp;</span>
+                <span class="s1">Objects.equals(routeNumbers</span><span class="s0">, </span><span class="s1">that.routeNumbers) &amp;&amp;</span>
+                <span class="s1">Objects.equals(city</span><span class="s0">, </span><span class="s1">that.city) &amp;&amp;</span>
+                <span class="s1">Objects.equals(addressFrom</span><span class="s0">, </span><span class="s1">that.addressFrom) &amp;&amp;</span>
+                <span class="s1">Objects.equals(addressTo</span><span class="s0">, </span><span class="s1">that.addressTo) &amp;&amp;</span>
+                <span class="s1">Objects.equals(discount</span><span class="s0">, </span><span class="s1">that.discount) &amp;&amp;</span>
+                <span class="s1">Objects.equals(originalPrice</span><span class="s0">, </span><span class="s1">that.originalPrice) &amp;&amp;</span>
+                <span class="s1">Objects.equals(priceWithDiscount</span><span class="s0">, </span><span class="s1">that.priceWithDiscount) &amp;&amp;</span>
+                <span class="s1">Objects.equals(numberOfTickets</span><span class="s0">, </span><span class="s1">that.numberOfTickets)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">hashCode() {</span>
+        <span class="s0">return </span><span class="s1">Objects.hash(id</span><span class="s0">, </span><span class="s1">offerType</span><span class="s0">, </span><span class="s1">companyName</span><span class="s0">, </span><span class="s1">passenger</span><span class="s0">, </span><span class="s1">transportTypes</span><span class="s0">, </span><span class="s1">taxRate</span><span class="s0">, </span><span class="s1">routeNumbers</span><span class="s0">, </span><span class="s1">city</span><span class="s0">, </span><span class="s1">addressFrom</span><span class="s0">, </span><span class="s1">addressTo</span><span class="s0">, </span><span class="s1">discount</span><span class="s0">, </span><span class="s1">originalPrice</span><span class="s0">, </span><span class="s1">priceWithDiscount</span><span class="s0">, </span><span class="s1">numberOfTickets)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s3">&quot;RegionalOfferDTO{&quot; </span><span class="s1">+</span>
+                <span class="s3">&quot;id='&quot; </span><span class="s1">+ id + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, offerType='&quot; </span><span class="s1">+ offerType + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, companyName='&quot; </span><span class="s1">+ companyName + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, passenger='&quot; </span><span class="s1">+ passenger + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, transportTypes=&quot; </span><span class="s1">+ transportTypes +</span>
+                <span class="s3">&quot;, taxRate='&quot; </span><span class="s1">+ taxRate + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, routeNumbers=&quot; </span><span class="s1">+ routeNumbers +</span>
+                <span class="s3">&quot;, city='&quot; </span><span class="s1">+ city + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, addressFrom=&quot; </span><span class="s1">+ addressFrom +</span>
+                <span class="s3">&quot;, addressTo=&quot; </span><span class="s1">+ addressTo +</span>
+                <span class="s3">&quot;, discount='&quot; </span><span class="s1">+ discount + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, originalPrice='&quot; </span><span class="s1">+ originalPrice + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, priceWithDiscount='&quot; </span><span class="s1">+ priceWithDiscount + </span><span class="s3">'</span><span class="s0">\'</span><span class="s3">' </span><span class="s1">+</span>
+                <span class="s3">&quot;, numberOfTickets=&quot; </span><span class="s1">+ numberOfTickets +</span>
+                <span class="s3">'}'</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Integer getNumberOfTickets() {</span>
+        <span class="s0">return </span><span class="s1">numberOfTickets</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNumberOfTickets(Integer numberOfTickets) {</span>
+        <span class="s0">this</span><span class="s1">.numberOfTickets = numberOfTickets</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getTaxRate() {</span>
+        <span class="s0">return </span><span class="s1">taxRate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTaxRate(String taxRate) {</span>
+        <span class="s0">this</span><span class="s1">.taxRate = taxRate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">List&lt;String&gt; getRouteNumbers() {</span>
+        <span class="s0">return </span><span class="s1">routeNumbers</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setRouteNumbers(List&lt;String&gt; routeNumbers) {</span>
+        <span class="s0">this</span><span class="s1">.routeNumbers = routeNumbers</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">AddressDTO getAddressFrom() {</span>
+        <span class="s0">return </span><span class="s1">addressFrom</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setAddressFrom(AddressDTO addressFrom) {</span>
+        <span class="s0">this</span><span class="s1">.addressFrom = addressFrom</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">AddressDTO getAddressTo() {</span>
+        <span class="s0">return </span><span class="s1">addressTo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setAddressTo(AddressDTO addressTo) {</span>
+        <span class="s0">this</span><span class="s1">.addressTo = addressTo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getCity() {</span>
+        <span class="s0">return </span><span class="s1">city</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCity(String city) {</span>
+        <span class="s0">this</span><span class="s1">.city = city</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/* Equals &amp; HashCode */</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

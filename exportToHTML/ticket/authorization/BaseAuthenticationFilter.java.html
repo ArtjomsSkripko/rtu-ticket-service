@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>BaseAuthenticationFilter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BaseAuthenticationFilter.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.authorization</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.net.URLDecoder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.text.MessageFormat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Optional</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.servlet.FilterChain</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.servlet.ServletException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.servlet.ServletRequest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.servlet.ServletResponse</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.servlet.http.HttpServletRequest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.servlet.http.HttpServletResponse</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.slf4j.Logger</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.slf4j.LoggerFactory</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.authentication.AuthenticationManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.authentication.InternalAuthenticationServiceException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.core.Authentication</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.core.context.SecurityContextHolder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.web.filter.GenericFilterBean</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">BaseAuthenticationFilter </span><span class="s0">extends </span><span class="s1">GenericFilterBean {</span>
+
+	<span class="s0">private final static </span><span class="s1">Logger LOGGER = LoggerFactory.getLogger(BaseAuthenticationFilter.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+
+	<span class="s0">protected </span><span class="s1">AuthenticationManager authenticationManager</span><span class="s0">;</span>
+
+	<span class="s0">public </span><span class="s1">BaseAuthenticationFilter(AuthenticationManager authenticationManager) {</span>
+		<span class="s0">this</span><span class="s1">.authenticationManager = authenticationManager</span><span class="s0">;</span>
+	<span class="s1">}</span>
+
+	<span class="s1">@Override</span>
+	<span class="s0">public void </span><span class="s1">doFilter(ServletRequest request</span><span class="s0">, </span><span class="s1">ServletResponse response</span><span class="s0">, </span><span class="s1">FilterChain chain) </span><span class="s0">throws </span><span class="s1">IOException</span><span class="s0">, </span><span class="s1">ServletException {</span>
+		<span class="s1">HttpServletRequest httpRequest = (HttpServletRequest) request</span><span class="s0">;</span>
+		<span class="s1">HttpServletResponse httpResponse = (HttpServletResponse) response</span><span class="s0">;</span>
+		<span class="s1">Optional&lt;String&gt; token = Optional.ofNullable(httpRequest.getHeader(ServicesConstants.HEADER_AUTHORIZATION))</span><span class="s0">;</span>
+		<span class="s0">try </span><span class="s1">{</span>
+			<span class="s0">if </span><span class="s1">(token.isPresent()) {</span>
+				<span class="s0">if </span><span class="s1">(token.get().indexOf(</span><span class="s2">'%'</span><span class="s1">) &gt; -</span><span class="s3">1</span><span class="s1">) {</span>
+					<span class="s1">token = Optional.of(URLDecoder.decode(token.get()</span><span class="s0">, </span><span class="s2">&quot;UTF-8&quot;</span><span class="s1">))</span><span class="s0">;</span>
+				<span class="s1">}</span>
+				<span class="s0">if </span><span class="s1">(token.get().startsWith(</span><span class="s2">&quot;Bearer &quot;</span><span class="s1">)) {</span>
+					<span class="s1">token = Optional.ofNullable(token.get().substring(</span><span class="s3">7</span><span class="s1">))</span><span class="s0">;</span>
+					<span class="s1">processTokenAuthentication(token)</span><span class="s0">;</span>
+				<span class="s1">}</span>
+			<span class="s1">}</span>
+			<span class="s1">chain.doFilter(request</span><span class="s0">, </span><span class="s1">response)</span><span class="s0">;</span>
+		<span class="s1">} </span><span class="s0">catch </span><span class="s1">(Exception ex) {</span>
+			<span class="s1">SecurityContextHolder.clearContext()</span><span class="s0">;</span>
+			<span class="s1">LOGGER.error(MessageFormat.format(</span><span class="s2">&quot;Response {0}&quot;</span><span class="s0">, </span><span class="s1">httpResponse))</span><span class="s0">;</span>
+			<span class="s0">throw </span><span class="s1">ex</span><span class="s0">;</span>
+		<span class="s1">}</span>
+	<span class="s1">}</span>
+
+	<span class="s0">protected void </span><span class="s1">processTokenAuthentication(Optional&lt;String&gt; token) {</span>
+		<span class="s1">Authentication resultOfAuthentication = tryToAuthenticateWithToken(token)</span><span class="s0">;</span>
+		<span class="s1">SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication)</span><span class="s0">;</span>
+	<span class="s1">}</span>
+
+	<span class="s0">protected </span><span class="s1">Authentication tryToAuthenticateWithToken(Optional&lt;String&gt; token) {</span>
+		<span class="s1">PreAuthenticatedAuthenticationToken requestAuthentication = </span><span class="s0">new </span><span class="s1">PreAuthenticatedAuthenticationToken(token</span><span class="s0">,</span>
+				<span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+		<span class="s0">return </span><span class="s1">tryToAuthenticate(requestAuthentication)</span><span class="s0">;</span>
+	<span class="s1">}</span>
+
+	<span class="s0">protected </span><span class="s1">Authentication tryToAuthenticate(Authentication requestAuthentication) {</span>
+		<span class="s1">Authentication responseAuthentication = authenticationManager.authenticate(requestAuthentication)</span><span class="s0">;</span>
+		<span class="s0">if </span><span class="s1">(responseAuthentication == </span><span class="s0">null </span><span class="s1">|| !responseAuthentication.isAuthenticated()) {</span>
+			<span class="s0">throw new </span><span class="s1">InternalAuthenticationServiceException(</span><span class="s2">&quot;Unable to authenticate caller with provided credentials&quot;</span><span class="s1">)</span><span class="s0">;</span>
+		<span class="s1">}</span>
+		<span class="s0">return </span><span class="s1">responseAuthentication</span><span class="s0">;</span>
+	<span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

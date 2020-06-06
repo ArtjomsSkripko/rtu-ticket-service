@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>TicketRepositoryTest.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TicketRepositoryTest.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.repository</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Collections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.sql.DataSource</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.junit.Before</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.junit.Test</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.mockito.Mockito</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.namedparam.MapSqlParameterSource</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.simple.SimpleJdbcInsert</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.test.util.ReflectionTestUtils</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.builders.TicketBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.exception.OfferAlreadyUsedException</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">org.mockito.Matchers.anyString</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">org.mockito.Mockito.*</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">org.mockito.Mockito.mock</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">TicketRepositoryTest {</span>
+
+    <span class="s0">private </span><span class="s1">TicketRepository repository</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">NamedParameterJdbcOperations namedJdbcTemplate</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">SimpleJdbcInsert simpleJdbcInsert</span><span class="s0">;</span>
+
+    <span class="s1">@Before</span>
+    <span class="s0">public void </span><span class="s1">setUp() </span><span class="s0">throws </span><span class="s1">Exception {</span>
+        <span class="s1">namedJdbcTemplate = mock(NamedParameterJdbcOperations.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">DataSource dataSource = mock(DataSource.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">simpleJdbcInsert = mock(SimpleJdbcInsert.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">repository = </span><span class="s0">new </span><span class="s1">TicketRepository(namedJdbcTemplate</span><span class="s0">, </span><span class="s1">dataSource)</span><span class="s0">;</span>
+        <span class="s1">ReflectionTestUtils.setField(repository</span><span class="s0">, </span><span class="s2">&quot;insertTicketTmpl&quot;</span><span class="s0">, </span><span class="s1">simpleJdbcInsert</span><span class="s0">, </span><span class="s1">SimpleJdbcInsert.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">ReflectionTestUtils.setField(repository</span><span class="s0">, </span><span class="s2">&quot;namedJdbcTemplate&quot;</span><span class="s0">, </span><span class="s1">namedJdbcTemplate</span><span class="s0">, </span><span class="s1">NamedParameterJdbcOperations.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Test</span>
+    <span class="s0">public void </span><span class="s1">testValidateOfferIds() {</span>
+        <span class="s1">when(namedJdbcTemplate.queryForObject(anyString()</span><span class="s0">, </span><span class="s1">any(MapSqlParameterSource.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">, </span><span class="s1">eq(Integer.</span><span class="s0">class</span><span class="s1">)))</span>
+                <span class="s1">.thenReturn(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">repository.validateOfferIds(Collections.singletonList(</span><span class="s2">&quot;test&quot;</span><span class="s1">))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Test(expected = OfferAlreadyUsedException.</span><span class="s0">class</span><span class="s1">)</span>
+    <span class="s0">public void </span><span class="s1">testValidateOfferIdsAlreadyUsed() {</span>
+        <span class="s1">when(namedJdbcTemplate.queryForObject(anyString()</span><span class="s0">, </span><span class="s1">any(MapSqlParameterSource.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">, </span><span class="s1">eq(Integer.</span><span class="s0">class</span><span class="s1">)))</span>
+                <span class="s1">.thenReturn(</span><span class="s3">1</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">repository.validateOfferIds(Collections.singletonList(</span><span class="s2">&quot;test&quot;</span><span class="s1">))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Test</span>
+    <span class="s0">public void </span><span class="s1">testSaveTickets() {</span>
+        <span class="s0">int</span><span class="s1">[] res = {</span><span class="s3">1</span><span class="s1">}</span><span class="s0">;</span>
+        <span class="s1">when(simpleJdbcInsert.executeBatch(any(MapSqlParameterSource[].</span><span class="s0">class</span><span class="s1">)))</span>
+                <span class="s1">.thenReturn(res)</span><span class="s0">;</span>
+        <span class="s1">repository.saveTickets(Collections.singletonList(</span><span class="s0">new </span><span class="s1">TicketBuilder().withDefaults().build()))</span><span class="s0">;</span>
+        <span class="s1">Mockito.verify(simpleJdbcInsert</span><span class="s0">, </span><span class="s1">times(</span><span class="s3">1</span><span class="s1">)).executeBatch(any(MapSqlParameterSource[].</span><span class="s0">class</span><span class="s1">))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

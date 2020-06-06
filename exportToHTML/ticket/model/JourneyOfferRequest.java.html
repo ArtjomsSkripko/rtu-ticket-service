@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>JourneyOfferRequest.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+JourneyOfferRequest.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.model</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">io.swagger.annotations.ApiModel</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.OfferTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.PassengerTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.TransportTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.EqualsBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.HashCodeBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringStyle</span><span class="s0">;</span>
+
+<span class="s1">@ApiModel(description = </span><span class="s2">&quot;Offer request details&quot;</span><span class="s1">)</span>
+<span class="s0">public class </span><span class="s1">JourneyOfferRequest {</span>
+
+    <span class="s0">private </span><span class="s1">OfferTypeEnum offerType</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Integer numberOfTickets</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String companyName</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">PassengerTypeEnum passenger</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">List&lt;TransportTypeEnum&gt; transportTypes</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">List&lt;Integer&gt; routeNumbers</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Address addressFrom</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Address addressTo</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">ZonedDateTime departureTime</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Integer numberOfLuggage</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String placeType</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">OfferTypeEnum getOfferType() {</span>
+        <span class="s0">return </span><span class="s1">offerType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setOfferType(OfferTypeEnum offerType) {</span>
+        <span class="s0">this</span><span class="s1">.offerType = offerType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Integer getNumberOfTickets() {</span>
+        <span class="s0">return </span><span class="s1">numberOfTickets</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNumberOfTickets(Integer numberOfTickets) {</span>
+        <span class="s0">this</span><span class="s1">.numberOfTickets = numberOfTickets</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getCompanyName() {</span>
+        <span class="s0">return </span><span class="s1">companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCompanyName(String companyName) {</span>
+        <span class="s0">this</span><span class="s1">.companyName = companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">PassengerTypeEnum getPassenger() {</span>
+        <span class="s0">return </span><span class="s1">passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPassenger(PassengerTypeEnum passenger) {</span>
+        <span class="s0">this</span><span class="s1">.passenger = passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">List&lt;TransportTypeEnum&gt; getTransportTypes() {</span>
+        <span class="s0">return </span><span class="s1">transportTypes</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTransportTypes(List&lt;TransportTypeEnum&gt; transportTypes) {</span>
+        <span class="s0">this</span><span class="s1">.transportTypes = transportTypes</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">List&lt;Integer&gt; getRouteNumbers() {</span>
+        <span class="s0">return </span><span class="s1">routeNumbers</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setRouteNumbers(List&lt;Integer&gt; routeNumbers) {</span>
+        <span class="s0">this</span><span class="s1">.routeNumbers = routeNumbers</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Address getAddressFrom() {</span>
+        <span class="s0">return </span><span class="s1">addressFrom</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setAddressFrom(Address addressFrom) {</span>
+        <span class="s0">this</span><span class="s1">.addressFrom = addressFrom</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Address getAddressTo() {</span>
+        <span class="s0">return </span><span class="s1">addressTo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setAddressTo(Address addressTo) {</span>
+        <span class="s0">this</span><span class="s1">.addressTo = addressTo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">ZonedDateTime getDepartureTime() {</span>
+        <span class="s0">return </span><span class="s1">departureTime</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDepartureTime(ZonedDateTime departureTime) {</span>
+        <span class="s0">this</span><span class="s1">.departureTime = departureTime</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Integer getNumberOfLuggage() {</span>
+        <span class="s0">return </span><span class="s1">numberOfLuggage</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNumberOfLuggage(Integer numberOfLuggage) {</span>
+        <span class="s0">this</span><span class="s1">.numberOfLuggage = numberOfLuggage</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPlaceType() {</span>
+        <span class="s0">return </span><span class="s1">placeType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPlaceType(String placeType) {</span>
+        <span class="s0">this</span><span class="s1">.placeType = placeType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s3">/* Equals &amp; HashCode */</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">equals(</span><span class="s0">final </span><span class="s1">Object other) {</span>
+        <span class="s0">if </span><span class="s1">(</span><span class="s0">this </span><span class="s1">== other) {</span>
+            <span class="s0">return true;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">if </span><span class="s1">(other == </span><span class="s0">null </span><span class="s1">|| getClass() != other.getClass()) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">JourneyOfferRequest castOther = (JourneyOfferRequest) other</span><span class="s0">;</span>
+
+        <span class="s0">return new </span><span class="s1">EqualsBuilder()</span>
+                <span class="s1">.append(offerType</span><span class="s0">, </span><span class="s1">castOther.offerType)</span>
+                <span class="s1">.append(numberOfTickets</span><span class="s0">, </span><span class="s1">castOther.numberOfTickets)</span>
+                <span class="s1">.append(companyName</span><span class="s0">, </span><span class="s1">castOther.companyName)</span>
+                <span class="s1">.append(passenger</span><span class="s0">, </span><span class="s1">castOther.passenger)</span>
+                <span class="s1">.append(transportTypes</span><span class="s0">, </span><span class="s1">castOther.transportTypes)</span>
+                <span class="s1">.append(routeNumbers</span><span class="s0">, </span><span class="s1">castOther.routeNumbers)</span>
+                <span class="s1">.append(addressFrom</span><span class="s0">, </span><span class="s1">castOther.addressFrom)</span>
+                <span class="s1">.append(addressTo</span><span class="s0">, </span><span class="s1">castOther.addressTo)</span>
+                <span class="s1">.append(placeType</span><span class="s0">, </span><span class="s1">castOther.placeType)</span>
+                <span class="s1">.append(numberOfLuggage</span><span class="s0">, </span><span class="s1">castOther.numberOfLuggage)</span>
+                <span class="s1">.append(departureTime</span><span class="s0">, </span><span class="s1">castOther.departureTime)</span>
+                <span class="s1">.isEquals()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">hashCode() {</span>
+        <span class="s0">return new </span><span class="s1">HashCodeBuilder()</span>
+                <span class="s1">.append(offerType)</span>
+                <span class="s1">.append(numberOfTickets)</span>
+                <span class="s1">.append(companyName)</span>
+                <span class="s1">.append(passenger)</span>
+                <span class="s1">.append(transportTypes)</span>
+                <span class="s1">.append(routeNumbers)</span>
+                <span class="s1">.append(addressFrom)</span>
+                <span class="s1">.append(addressTo)</span>
+                <span class="s1">.append(placeType)</span>
+                <span class="s1">.append(numberOfLuggage)</span>
+                <span class="s1">.append(departureTime)</span>
+                <span class="s1">.toHashCode()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return new </span><span class="s1">ToStringBuilder(</span><span class="s0">this, </span><span class="s1">ToStringStyle.SHORT_PREFIX_STYLE)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;offerType&quot;</span><span class="s0">, </span><span class="s1">offerType)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;numberOfTickets&quot;</span><span class="s0">, </span><span class="s1">numberOfTickets)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;companyName&quot;</span><span class="s0">, </span><span class="s1">companyName)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;passenger&quot;</span><span class="s0">, </span><span class="s1">passenger)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;transportTypes&quot;</span><span class="s0">, </span><span class="s1">transportTypes)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;routeNumbers&quot;</span><span class="s0">, </span><span class="s1">routeNumbers)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;addressFrom&quot;</span><span class="s0">, </span><span class="s1">addressFrom)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;addressTo&quot;</span><span class="s0">, </span><span class="s1">addressTo)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;placeType&quot;</span><span class="s0">, </span><span class="s1">placeType)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;numberOfLuggage&quot;</span><span class="s0">, </span><span class="s1">numberOfLuggage)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;departureTime&quot;</span><span class="s0">, </span><span class="s1">departureTime)</span>
+                <span class="s1">.toString()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>OfferMapper.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+OfferMapper.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.mapper</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">ticket.model.Address</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.JourneyOffer</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Ticket</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.AddressDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.JourneyOfferDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.stereotype.Component</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.TicketDTO</span><span class="s0">;</span>
+
+<span class="s1">@Component</span>
+<span class="s0">public class </span><span class="s1">OfferMapper {</span>
+
+    <span class="s0">public </span><span class="s1">JourneyOffer toDomainOffer(JourneyOfferDTO offer) {</span>
+        <span class="s1">JourneyOffer dto = </span><span class="s0">new </span><span class="s1">JourneyOffer()</span><span class="s0">;</span>
+
+        <span class="s1">dto.setAddressFrom(toDomainAddress(offer.getAddressFrom()))</span><span class="s0">;</span>
+        <span class="s1">dto.setAddressTo(toDomainAddress(offer.getAddressTo()))</span><span class="s0">;</span>
+        <span class="s1">dto.setDepartureTime(offer.getDepartureTime())</span><span class="s0">;</span>
+        <span class="s1">dto.setIntercityOffer(offer.getIntercityOffer())</span><span class="s0">;</span>
+        <span class="s1">dto.setRegionalOffer(offer.getRegionalOffers())</span><span class="s0">;</span>
+
+        <span class="s0">return </span><span class="s1">dto</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">TicketDTO toDTOTicket(Ticket ticket) {</span>
+        <span class="s1">TicketDTO dto = </span><span class="s0">new </span><span class="s1">TicketDTO()</span><span class="s0">;</span>
+
+        <span class="s1">dto.setTicketId(ticket.getTicketId())</span><span class="s0">;</span>
+        <span class="s1">dto.setType(ticket.getType() != </span><span class="s0">null </span><span class="s1">? ticket.getType().name() : </span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">dto.setCompanyName(ticket.getCompanyName())</span><span class="s0">;</span>
+        <span class="s1">dto.setPassenger(ticket.getPassenger().name())</span><span class="s0">;</span>
+        <span class="s1">dto.setTransportTypes(ticket.getTransportTypes())</span><span class="s0">;</span>
+        <span class="s1">dto.setPriceWithoutDiscount(ticket.getPriceWithoutDiscount().toPlainString())</span><span class="s0">;</span>
+        <span class="s1">dto.setPriceWithDiscount(ticket.getPriceWithDiscount().toPlainString())</span><span class="s0">;</span>
+        <span class="s1">dto.setTaxRate(ticket.getTaxRate())</span><span class="s0">;</span>
+        <span class="s1">dto.setRouteNumbers(ticket.getRouteNumbers())</span><span class="s0">;</span>
+        <span class="s1">dto.setAddressFrom(toDTOAddress(ticket.getAddressFrom()))</span><span class="s0">;</span>
+        <span class="s1">dto.setAddressTo(toDTOAddress(ticket.getAddressTo()))</span><span class="s0">;</span>
+        <span class="s1">dto.setDepartureTime(ticket.getDepartureTime() != </span><span class="s0">null </span><span class="s1">? ticket.getDepartureTime().toString() : </span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">dto.setPlaceType(ticket.getPlaceType())</span><span class="s0">;</span>
+        <span class="s1">dto.setDiscount(ticket.getDiscount())</span><span class="s0">;</span>
+        <span class="s1">dto.setStatus(ticket.getStatus().name())</span><span class="s0">;</span>
+        <span class="s1">dto.setValidUntil(ticket.getValidUntil().toString())</span><span class="s0">;</span>
+        <span class="s1">dto.setUserId(ticket.getUserId())</span><span class="s0">;</span>
+        <span class="s1">dto.setOfferId(ticket.getOfferId())</span><span class="s0">;</span>
+        <span class="s1">dto.setNumberOfLuggage(ticket.getNumberOfLuggage())</span><span class="s0">;</span>
+
+        <span class="s0">return </span><span class="s1">dto</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Address toDomainAddress(AddressDTO addressDTO) {</span>
+        <span class="s1">Address address = </span><span class="s0">new </span><span class="s1">Address()</span><span class="s0">;</span>
+
+        <span class="s1">address.setCity(addressDTO.getCity())</span><span class="s0">;</span>
+        <span class="s1">address.setHomeNumber(addressDTO.getHomeNumber())</span><span class="s0">;</span>
+        <span class="s1">address.setStreetName(addressDTO.getStreetName())</span><span class="s0">;</span>
+
+        <span class="s0">return </span><span class="s1">address</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">AddressDTO toDTOAddress(Address address) {</span>
+        <span class="s1">AddressDTO addressDTO = </span><span class="s0">new </span><span class="s1">AddressDTO()</span><span class="s0">;</span>
+
+        <span class="s1">addressDTO.setCity(address.getCity())</span><span class="s0">;</span>
+        <span class="s1">addressDTO.setHomeNumber(address.getHomeNumber())</span><span class="s0">;</span>
+        <span class="s1">addressDTO.setStreetName(address.getStreetName())</span><span class="s0">;</span>
+
+        <span class="s0">return </span><span class="s1">addressDTO</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

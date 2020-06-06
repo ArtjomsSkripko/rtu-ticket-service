@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>TicketRepository.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TicketRepository.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.repository</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Collection</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">javax.sql.DataSource</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.springframework.beans.factory.annotation.Autowired</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.namedparam.MapSqlParameterSource</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.jdbc.core.simple.SimpleJdbcInsert</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.stereotype.Repository</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.util.CollectionUtils</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.exception.OfferAlreadyUsedException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Ticket</span><span class="s0">;</span>
+
+<span class="s1">@Repository</span>
+<span class="s0">public class </span><span class="s1">TicketRepository {</span>
+
+    <span class="s0">private </span><span class="s1">SimpleJdbcInsert insertTicketTmpl</span><span class="s0">;</span>
+
+    <span class="s0">private </span><span class="s1">NamedParameterJdbcOperations namedJdbcTemplate</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String COMPANY_NAME_COLUMN = </span><span class="s2">&quot;company_name&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String PLACE_TYPE_COLUMN = </span><span class="s2">&quot;place_type&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String TRANSPORT_TYPE_COLUMN = </span><span class="s2">&quot;transport_type&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DEP_CITY_COLUMN = </span><span class="s2">&quot;dep_city&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DEP_STREET_COLUMN = </span><span class="s2">&quot;dep_street&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DEP_HOME_COLUMN = </span><span class="s2">&quot;dep_home&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DEST_HOME_COLUMN = </span><span class="s2">&quot;dest_home&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DEST_STREET_COLUMN = </span><span class="s2">&quot;dest_street&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DEST_CITY_COLUMN = </span><span class="s2">&quot;dest_city&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DEP_TIME_COLUMN = </span><span class="s2">&quot;dep_time&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String TICKET_ID = </span><span class="s2">&quot;ticket_id&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String TYPE = </span><span class="s2">&quot;type&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String PASSENGER = </span><span class="s2">&quot;passenger&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String PRICE_WITH_DISCOUNT = </span><span class="s2">&quot;price_with_discount&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String PRICE_WITHOUT_DISCOUNT = </span><span class="s2">&quot;price_without_discount&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String TAX_RATE = </span><span class="s2">&quot;tax_rate&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String ROUTE_NUMBERS = </span><span class="s2">&quot;route_number&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String VALID_UNTIL = </span><span class="s2">&quot;valid_until&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String USER_ID = </span><span class="s2">&quot;user_id&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String DISCOUNT = </span><span class="s2">&quot;discount&quot;</span><span class="s0">;</span>
+    <span class="s0">public static </span><span class="s1">String OFFER_ID = </span><span class="s2">&quot;offer_id&quot;</span><span class="s0">;</span>
+
+
+    <span class="s1">@Autowired</span>
+    <span class="s0">public </span><span class="s1">TicketRepository(NamedParameterJdbcOperations namedParameterJdbcTemplate</span><span class="s0">, </span><span class="s1">DataSource dataSource) {</span>
+        <span class="s0">this</span><span class="s1">.namedJdbcTemplate = namedParameterJdbcTemplate</span><span class="s0">;</span>
+
+        <span class="s0">this</span><span class="s1">.insertTicketTmpl = </span><span class="s0">new </span><span class="s1">SimpleJdbcInsert(dataSource).withTableName(</span><span class="s2">&quot;ticket&quot;</span><span class="s1">)</span>
+                <span class="s1">.usingColumns(COMPANY_NAME_COLUMN</span><span class="s0">, </span><span class="s1">PLACE_TYPE_COLUMN</span><span class="s0">, </span><span class="s1">TRANSPORT_TYPE_COLUMN</span><span class="s0">, </span><span class="s1">DEP_CITY_COLUMN</span><span class="s0">, </span><span class="s1">DEP_STREET_COLUMN</span>
+                        <span class="s0">, </span><span class="s1">DEP_HOME_COLUMN</span><span class="s0">, </span><span class="s1">DEST_HOME_COLUMN</span><span class="s0">, </span><span class="s1">DEST_STREET_COLUMN</span><span class="s0">, </span><span class="s1">DEST_CITY_COLUMN</span>
+                        <span class="s0">, </span><span class="s1">DEP_TIME_COLUMN</span><span class="s0">, </span><span class="s1">TICKET_ID</span><span class="s0">, </span><span class="s1">TYPE</span><span class="s0">, </span><span class="s1">PASSENGER</span><span class="s0">, </span><span class="s1">PRICE_WITH_DISCOUNT</span>
+                        <span class="s0">, </span><span class="s1">PRICE_WITHOUT_DISCOUNT</span><span class="s0">, </span><span class="s1">TAX_RATE</span><span class="s0">, </span><span class="s1">ROUTE_NUMBERS</span><span class="s0">, </span><span class="s1">VALID_UNTIL</span><span class="s0">, </span><span class="s1">USER_ID</span><span class="s0">, </span><span class="s1">DISCOUNT</span><span class="s0">, </span><span class="s1">OFFER_ID)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">saveTickets(List&lt;Ticket&gt; tickets) {</span>
+        <span class="s1">Collection&lt;MapSqlParameterSource&gt; paramsList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;(tickets.size())</span><span class="s0">;</span>
+
+        <span class="s1">tickets.forEach(ticket -&gt; {</span>
+            <span class="s1">MapSqlParameterSource params = </span><span class="s0">new </span><span class="s1">MapSqlParameterSource()</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">COMPANY_NAME_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getCompanyName())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">PLACE_TYPE_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getPlaceType())</span><span class="s0">;</span>
+            <span class="s1">List&lt;String&gt; transportTypes = ticket.getTransportTypes()</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(!CollectionUtils.isEmpty(transportTypes)) {</span>
+                <span class="s1">StringBuilder transportType = </span><span class="s0">new </span><span class="s1">StringBuilder()</span><span class="s0">;</span>
+                <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s0">; </span><span class="s1">i &lt; transportTypes.size()</span><span class="s0">; </span><span class="s1">i++) {</span>
+                    <span class="s1">transportType.append(transportTypes.get(i))</span><span class="s0">;</span>
+                    <span class="s0">if </span><span class="s1">(i != transportTypes.size() - </span><span class="s3">1</span><span class="s1">) {</span>
+                        <span class="s1">transportType.append(</span><span class="s2">&quot;,&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+                <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">TRANSPORT_TYPE_COLUMN</span><span class="s0">, </span><span class="s1">transportType)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DEP_CITY_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getAddressFrom().getCity())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DEP_STREET_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getAddressFrom().getStreetName())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DEP_HOME_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getAddressFrom().getHomeNumber())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DEST_HOME_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getAddressTo().getHomeNumber())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DEST_STREET_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getAddressTo().getStreetName())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DEST_CITY_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getAddressTo().getCity())</span><span class="s0">;</span>
+            <span class="s0">if</span><span class="s1">(ticket.getDepartureTime() != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DEP_TIME_COLUMN</span><span class="s0">, </span><span class="s1">ticket.getDepartureTime().toString())</span><span class="s0">;</span>
+            <span class="s0">if</span><span class="s1">(ticket.getType() != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">TYPE</span><span class="s0">, </span><span class="s1">ticket.getType().name())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">TICKET_ID</span><span class="s0">, </span><span class="s1">ticket.getTicketId())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">OFFER_ID</span><span class="s0">, </span><span class="s1">ticket.getOfferId())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">PASSENGER</span><span class="s0">, </span><span class="s1">ticket.getPassenger().name())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">PRICE_WITH_DISCOUNT</span><span class="s0">, </span><span class="s1">ticket.getPriceWithDiscount().toString())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">PRICE_WITHOUT_DISCOUNT</span><span class="s0">, </span><span class="s1">ticket.getPriceWithoutDiscount().toString())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">TAX_RATE</span><span class="s0">, </span><span class="s1">ticket.getTaxRate())</span><span class="s0">;</span>
+            <span class="s1">List&lt;String&gt; routeNumbers = ticket.getRouteNumbers()</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(!CollectionUtils.isEmpty(routeNumbers)) {</span>
+                <span class="s1">StringBuilder routeNumber = </span><span class="s0">new </span><span class="s1">StringBuilder()</span><span class="s0">;</span>
+                <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s0">; </span><span class="s1">i &lt; routeNumbers.size()</span><span class="s0">; </span><span class="s1">i++) {</span>
+                    <span class="s1">routeNumber.append(routeNumbers.get(i))</span><span class="s0">;</span>
+                    <span class="s0">if </span><span class="s1">(i != routeNumbers.size() - </span><span class="s3">1</span><span class="s1">) {</span>
+                        <span class="s1">routeNumber.append(</span><span class="s2">&quot;,&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+                <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">ROUTE_NUMBERS</span><span class="s0">, </span><span class="s1">routeNumber.toString())</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">VALID_UNTIL</span><span class="s0">, </span><span class="s1">ticket.getValidUntil().toString())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">USER_ID</span><span class="s0">, </span><span class="s1">ticket.getUserId())</span><span class="s0">;</span>
+            <span class="s1">addToParams(params</span><span class="s0">, </span><span class="s1">DISCOUNT</span><span class="s0">, </span><span class="s1">ticket.getDiscount())</span><span class="s0">;</span>
+            <span class="s1">paramsList.add(params)</span><span class="s0">;</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+        <span class="s1">insertTicketTmpl.executeBatch(paramsList.toArray(</span><span class="s0">new </span><span class="s1">MapSqlParameterSource[</span><span class="s3">0</span><span class="s1">]))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">validateOfferIds(List&lt;String&gt; offerIds) {</span>
+        <span class="s1">MapSqlParameterSource params = </span><span class="s0">new </span><span class="s1">MapSqlParameterSource()</span><span class="s0">;</span>
+        <span class="s1">params.addValue(OFFER_ID</span><span class="s0">, </span><span class="s1">offerIds)</span><span class="s0">;</span>
+
+        <span class="s1">String sql = </span><span class="s2">&quot;Select count(*) from ticket where offer_id IN (:&quot; </span><span class="s1">+ OFFER_ID + </span><span class="s2">&quot;)&quot;</span><span class="s0">;</span>
+        <span class="s1">Integer foundRows = namedJdbcTemplate.queryForObject(sql</span><span class="s0">, </span><span class="s1">params</span><span class="s0">, </span><span class="s1">Integer.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">(foundRows != </span><span class="s0">null </span><span class="s1">&amp;&amp; foundRows &gt; </span><span class="s3">0</span><span class="s1">) {</span>
+            <span class="s0">throw new </span><span class="s1">OfferAlreadyUsedException(</span><span class="s2">&quot;Some of offers are already used&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">addToParams(MapSqlParameterSource params</span><span class="s0">, </span><span class="s1">String paramName</span><span class="s0">, </span><span class="s1">Object value) {</span>
+        <span class="s0">if </span><span class="s1">(value != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">params.addValue(paramName</span><span class="s0">, </span><span class="s1">value)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

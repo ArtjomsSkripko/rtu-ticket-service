@@ -1,0 +1,262 @@
+<html>
+<head>
+<title>IntercityOfferDTO.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+IntercityOfferDTO.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.rest.model</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">io.swagger.annotations.ApiModelProperty</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.EqualsBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.HashCodeBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringBuilder</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.apache.commons.lang3.builder.ToStringStyle</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">IntercityOfferDTO {</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Id of ticket&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String id</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Number of tickets&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">Integer numberOfTickets</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Company name&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String companyName</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Type of passenger&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String passenger</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Types of transport&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String transportType</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Destination City&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String destCity</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Departure City&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String depCity</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Number of luggage items&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">Integer numberOfLuggage</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Place type&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String placeType</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Discount&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String discount</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Price without discount&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String originalPrice</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Price with discount&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String priceWithDiscount</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Tax rate&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">String taxRate</span><span class="s0">;</span>
+
+    <span class="s1">@ApiModelProperty(value = </span><span class="s2">&quot;Departure time&quot;</span><span class="s1">)</span>
+    <span class="s0">private </span><span class="s1">ZonedDateTime depTime</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">IntercityOfferDTO() {</span>
+        <span class="s3">// default constructor</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Integer getNumberOfTickets() {</span>
+        <span class="s0">return </span><span class="s1">numberOfTickets</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNumberOfTickets(Integer numberOfTickets) {</span>
+        <span class="s0">this</span><span class="s1">.numberOfTickets = numberOfTickets</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getCompanyName() {</span>
+        <span class="s0">return </span><span class="s1">companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCompanyName(String companyName) {</span>
+        <span class="s0">this</span><span class="s1">.companyName = companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPassenger() {</span>
+        <span class="s0">return </span><span class="s1">passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPassenger(String passenger) {</span>
+        <span class="s0">this</span><span class="s1">.passenger = passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getTransportType() {</span>
+        <span class="s0">return </span><span class="s1">transportType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTransportType(String transportType) {</span>
+        <span class="s0">this</span><span class="s1">.transportType = transportType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getDestCity() {</span>
+        <span class="s0">return </span><span class="s1">destCity</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDestCity(String destCity) {</span>
+        <span class="s0">this</span><span class="s1">.destCity = destCity</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getDepCity() {</span>
+        <span class="s0">return </span><span class="s1">depCity</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDepCity(String depCity) {</span>
+        <span class="s0">this</span><span class="s1">.depCity = depCity</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Integer getNumberOfLuggage() {</span>
+        <span class="s0">return </span><span class="s1">numberOfLuggage</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNumberOfLuggage(Integer numberOfLuggage) {</span>
+        <span class="s0">this</span><span class="s1">.numberOfLuggage = numberOfLuggage</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPlaceType() {</span>
+        <span class="s0">return </span><span class="s1">placeType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPlaceType(String placeType) {</span>
+        <span class="s0">this</span><span class="s1">.placeType = placeType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getDiscount() {</span>
+        <span class="s0">return </span><span class="s1">discount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDiscount(String discount) {</span>
+        <span class="s0">this</span><span class="s1">.discount = discount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getOriginalPrice() {</span>
+        <span class="s0">return </span><span class="s1">originalPrice</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setOriginalPrice(String originalPrice) {</span>
+        <span class="s0">this</span><span class="s1">.originalPrice = originalPrice</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPriceWithDiscount() {</span>
+        <span class="s0">return </span><span class="s1">priceWithDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPriceWithDiscount(String priceWithDiscount) {</span>
+        <span class="s0">this</span><span class="s1">.priceWithDiscount = priceWithDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getTaxRate() {</span>
+        <span class="s0">return </span><span class="s1">taxRate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTaxRate(String taxRate) {</span>
+        <span class="s0">this</span><span class="s1">.taxRate = taxRate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getId() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setId(String id) {</span>
+        <span class="s0">this</span><span class="s1">.id = id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">ZonedDateTime getDepTime() {</span>
+        <span class="s0">return </span><span class="s1">depTime</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDepTime(ZonedDateTime depTime) {</span>
+        <span class="s0">this</span><span class="s1">.depTime = depTime</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">/* Equals &amp; HashCode */</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">equals(</span><span class="s0">final </span><span class="s1">Object other) {</span>
+        <span class="s0">if </span><span class="s1">(</span><span class="s0">this </span><span class="s1">== other) {</span>
+            <span class="s0">return true;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">if </span><span class="s1">(other == </span><span class="s0">null </span><span class="s1">|| getClass() != other.getClass()) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">IntercityOfferDTO castOther = (IntercityOfferDTO) other</span><span class="s0">;</span>
+
+        <span class="s0">return new </span><span class="s1">EqualsBuilder()</span>
+                <span class="s1">.append(id</span><span class="s0">, </span><span class="s1">castOther.id)</span>
+                <span class="s1">.append(numberOfTickets</span><span class="s0">, </span><span class="s1">castOther.numberOfTickets)</span>
+                <span class="s1">.append(companyName</span><span class="s0">, </span><span class="s1">castOther.companyName)</span>
+                <span class="s1">.append(passenger</span><span class="s0">, </span><span class="s1">castOther.passenger)</span>
+                <span class="s1">.append(taxRate</span><span class="s0">, </span><span class="s1">castOther.taxRate)</span>
+                <span class="s1">.append(transportType</span><span class="s0">, </span><span class="s1">castOther.transportType)</span>
+                <span class="s1">.append(destCity</span><span class="s0">, </span><span class="s1">castOther.destCity)</span>
+                <span class="s1">.append(depCity</span><span class="s0">, </span><span class="s1">castOther.depCity)</span>
+                <span class="s1">.append(numberOfLuggage</span><span class="s0">, </span><span class="s1">castOther.numberOfLuggage)</span>
+                <span class="s1">.append(placeType</span><span class="s0">, </span><span class="s1">castOther.placeType)</span>
+                <span class="s1">.append(discount</span><span class="s0">, </span><span class="s1">castOther.discount)</span>
+                <span class="s1">.append(originalPrice</span><span class="s0">, </span><span class="s1">castOther.originalPrice)</span>
+                <span class="s1">.append(priceWithDiscount</span><span class="s0">, </span><span class="s1">castOther.priceWithDiscount)</span>
+                <span class="s1">.append(depTime</span><span class="s0">, </span><span class="s1">castOther.depTime)</span>
+                <span class="s1">.isEquals()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">hashCode() {</span>
+        <span class="s0">return new </span><span class="s1">HashCodeBuilder()</span>
+                <span class="s1">.append(id)</span>
+                <span class="s1">.append(numberOfTickets)</span>
+                <span class="s1">.append(companyName)</span>
+                <span class="s1">.append(passenger)</span>
+                <span class="s1">.append(taxRate)</span>
+                <span class="s1">.append(transportType)</span>
+                <span class="s1">.append(destCity)</span>
+                <span class="s1">.append(depCity)</span>
+                <span class="s1">.append(numberOfLuggage)</span>
+                <span class="s1">.append(placeType)</span>
+                <span class="s1">.append(discount)</span>
+                <span class="s1">.append(originalPrice)</span>
+                <span class="s1">.append(priceWithDiscount)</span>
+                <span class="s1">.append(depTime)</span>
+           <span class="s1">.toHashCode()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return new </span><span class="s1">ToStringBuilder(</span><span class="s0">this, </span><span class="s1">ToStringStyle.SHORT_PREFIX_STYLE)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;id&quot;</span><span class="s0">, </span><span class="s1">id)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;numberOfTickets&quot;</span><span class="s0">, </span><span class="s1">numberOfTickets)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;companyName&quot;</span><span class="s0">, </span><span class="s1">companyName)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;passenger&quot;</span><span class="s0">, </span><span class="s1">passenger)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;taxRate&quot;</span><span class="s0">, </span><span class="s1">taxRate)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;transportType&quot;</span><span class="s0">, </span><span class="s1">transportType)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;destCity&quot;</span><span class="s0">, </span><span class="s1">destCity)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;depCity&quot;</span><span class="s0">, </span><span class="s1">depCity)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;numberOfLuggage&quot;</span><span class="s0">, </span><span class="s1">numberOfLuggage)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;placeType&quot;</span><span class="s0">, </span><span class="s1">placeType)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;discount&quot;</span><span class="s0">, </span><span class="s1">discount)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;originalPrice&quot;</span><span class="s0">, </span><span class="s1">originalPrice)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;priceWithDiscount&quot;</span><span class="s0">, </span><span class="s1">priceWithDiscount)</span>
+                <span class="s1">.append(</span><span class="s2">&quot;depTime&quot;</span><span class="s0">, </span><span class="s1">depTime)</span>
+                <span class="s1">.toString()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

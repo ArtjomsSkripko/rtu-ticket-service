@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>TicketControllerSpockTest.groovy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TicketControllerSpockTest.groovy</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.rest</span>
+
+<span class="s0">import </span><span class="s1">spock.lang.Specification</span>
+<span class="s0">import </span><span class="s1">ticket.exception.UnauthorizedException</span>
+<span class="s0">import </span><span class="s1">ticket.mapper.OfferMapper</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.JourneyOfferDTO</span>
+<span class="s0">import </span><span class="s1">ticket.service.TicketService</span>
+
+<span class="s0">class </span><span class="s1">TicketControllerSpockTest </span><span class="s0">extends </span><span class="s1">Specification {</span>
+
+    <span class="s1">TicketService service</span>
+    <span class="s1">OfferMapper mapper</span>
+    <span class="s1">TicketController controller</span>
+
+    <span class="s0">def </span><span class="s1">setup() {</span>
+        <span class="s1">service = Mock(TicketService.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">mapper = Mock(OfferMapper.</span><span class="s0">class</span><span class="s1">)</span>
+        <span class="s1">controller = </span><span class="s0">new </span><span class="s1">TicketController(service, mapper)</span>
+    <span class="s1">}</span>
+
+    <span class="s0">void </span><span class="s2">&quot;call create tickets unauthorized&quot;</span><span class="s1">() {</span>
+        <span class="s1">given:</span>
+        <span class="s1">JourneyOfferDTO journeyOfferDTO = </span><span class="s0">new </span><span class="s1">JourneyOfferDTO()</span>
+        <span class="s1">when:</span>
+        <span class="s1">controller.reserveTicket([journeyOfferDTO])</span>
+        <span class="s1">then:</span>
+        <span class="s1">thrown(UnauthorizedException.</span><span class="s0">class</span><span class="s1">)</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

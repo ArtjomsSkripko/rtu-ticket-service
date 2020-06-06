@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>TokenAuthenticationProvider.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TokenAuthenticationProvider.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.authorization</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Optional</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.springframework.security.authentication.AuthenticationProvider</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.core.Authentication</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.core.AuthenticationException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.core.authority.SimpleGrantedAuthority</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.util.StringUtils</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">TokenAuthenticationProvider </span><span class="s0">implements </span><span class="s1">AuthenticationProvider {</span>
+
+    <span class="s0">private </span><span class="s1">AuthTokenService tokenService</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">TokenAuthenticationProvider(AuthTokenService tokenService) {</span>
+        <span class="s0">this</span><span class="s1">.tokenService = tokenService</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">Authentication authenticate(Authentication authentication) </span><span class="s0">throws </span><span class="s1">AuthenticationException {</span>
+        <span class="s1">@SuppressWarnings(</span><span class="s2">&quot;unchecked&quot;</span><span class="s1">)</span>
+        <span class="s1">Optional&lt;String&gt; token = (Optional&lt;String&gt;) authentication.getPrincipal()</span><span class="s0">;</span>
+
+        <span class="s1">UserToken tokenContainer = </span><span class="s0">null;</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">tokenContainer = tokenService.validateToken(token.get())</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(Exception e) {</span>
+            <span class="s1">e.printStackTrace()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">if </span><span class="s1">(tokenContainer != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">List&lt;SimpleGrantedAuthority&gt; authorities = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(!StringUtils.isEmpty(tokenContainer.getUserRole())) {</span>
+                <span class="s1">authorities.add(</span><span class="s0">new </span><span class="s1">SimpleGrantedAuthority(tokenContainer.getUserRole()))</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">PreAuthenticatedAuthenticationToken retAuthentication =</span>
+                    <span class="s0">new </span><span class="s1">PreAuthenticatedAuthenticationToken(tokenContainer</span><span class="s0">, null, </span><span class="s1">authorities)</span><span class="s0">;</span>
+            <span class="s1">retAuthentication.setDetails(token.get())</span><span class="s0">;</span>
+            <span class="s0">return </span><span class="s1">retAuthentication</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">return null;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">supports(Class&lt;?&gt; authentication) {</span>
+        <span class="s0">return </span><span class="s1">authentication.equals(PreAuthenticatedAuthenticationToken.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

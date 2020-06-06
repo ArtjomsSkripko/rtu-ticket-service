@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>OfferAlreadyUsedExceptionSpockTest.groovy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+OfferAlreadyUsedExceptionSpockTest.groovy</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.exception</span>
+
+<span class="s0">import </span><span class="s1">spock.lang.Specification</span>
+
+<span class="s0">class </span><span class="s1">OfferAlreadyUsedExceptionSpockTest </span><span class="s0">extends </span><span class="s1">Specification {</span>
+
+    <span class="s0">void </span><span class="s2">&quot;test Offer already in use exception&quot;</span><span class="s1">() {</span>
+        <span class="s1">given: </span><span class="s2">&quot;error message to pass in exception&quot;</span>
+        <span class="s1">String msg = </span><span class="s2">&quot;Offer is already in use&quot;</span>
+
+        <span class="s1">when: </span><span class="s2">&quot;create exception using constructor&quot;</span>
+        <span class="s1">OfferAlreadyUsedException result = </span><span class="s0">new </span><span class="s1">OfferAlreadyUsedException(msg)</span>
+
+        <span class="s1">then: </span><span class="s2">&quot;expect that created exception message is equal to passed message&quot;</span>
+        <span class="s1">result.message == msg</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+
+</pre>
+</body>
+</html>

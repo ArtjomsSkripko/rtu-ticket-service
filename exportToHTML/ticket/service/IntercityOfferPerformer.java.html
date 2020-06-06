@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>IntercityOfferPerformer.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+IntercityOfferPerformer.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.service</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.math.BigDecimal</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.math.MathContext</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.math.RoundingMode</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Collections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.UUID</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">org.springframework.beans.factory.annotation.Autowired</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">org.springframework.stereotype.Service</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.authorization.Utils</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.PassengerTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.StatusEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.mapper.OfferMapper</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Address</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.model.Ticket</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.repository.TicketRepository</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.IntercityOfferDTO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.rest.model.RegionalOfferDTO</span><span class="s0">;</span>
+
+<span class="s1">@Service</span>
+<span class="s0">public class </span><span class="s1">IntercityOfferPerformer {</span>
+
+    <span class="s1">@Autowired</span>
+    <span class="s0">private </span><span class="s1">TicketRepository repository</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">Ticket buildTicket(IntercityOfferDTO offer) {</span>
+        <span class="s1">Ticket ticket = </span><span class="s0">new </span><span class="s1">Ticket()</span><span class="s0">;</span>
+        <span class="s1">ticket.setOfferId(offer.getId())</span><span class="s0">;</span>
+        <span class="s1">ticket.setTicketId(UUID.randomUUID().toString())</span><span class="s0">;</span>
+        <span class="s1">ticket.setAddressFrom(</span><span class="s0">new </span><span class="s1">Address(offer.getDepCity()))</span><span class="s0">;</span>
+        <span class="s1">ticket.setAddressTo(</span><span class="s0">new </span><span class="s1">Address(offer.getDestCity()))</span><span class="s0">;</span>
+        <span class="s1">ticket.setValidUntil(offer.getDepTime().plusHours(</span><span class="s2">5</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">ticket.setCompanyName(offer.getCompanyName())</span><span class="s0">;</span>
+        <span class="s1">ticket.setDiscount(offer.getDiscount())</span><span class="s0">;</span>
+        <span class="s1">ticket.setPassenger(PassengerTypeEnum.valueOf(offer.getPassenger()))</span><span class="s0">;</span>
+        <span class="s1">ticket.setPlaceType(offer.getPlaceType())</span><span class="s0">;</span>
+        <span class="s1">ticket.setPriceWithoutDiscount(BigDecimal.valueOf(Double.parseDouble(offer.getOriginalPrice())))</span><span class="s0">;</span>
+        <span class="s1">ticket.setPriceWithDiscount(BigDecimal.valueOf(Double.parseDouble(offer.getPriceWithDiscount())))</span><span class="s0">;</span>
+        <span class="s1">ticket.setDiscount(offer.getDiscount())</span><span class="s0">;</span>
+        <span class="s1">ticket.setNumberOfLuggage(offer.getNumberOfLuggage())</span><span class="s0">;</span>
+        <span class="s1">ticket.setStatus(StatusEnum.NOT_ACTIVE)</span><span class="s0">;</span>
+        <span class="s1">ticket.setUserId(Utils.getServiceUser() != </span><span class="s0">null </span><span class="s1">? Utils.getServiceUser().getUserId() : </span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">repository.saveTickets(Collections.singletonList(ticket))</span><span class="s0">;</span>
+
+        <span class="s0">return </span><span class="s1">ticket</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<html>
+<head>
+<title>Ticket.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Ticket.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">ticket.model</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.math.BigDecimal</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.time.ZonedDateTime</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Objects</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">ticket.enumeration.OfferTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.PassengerTypeEnum</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">ticket.enumeration.StatusEnum</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Ticket {</span>
+
+    <span class="s0">private </span><span class="s1">String ticketId</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String offerId</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">OfferTypeEnum type</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String companyName</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">PassengerTypeEnum passenger</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">List&lt;String&gt; transportTypes</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">BigDecimal priceWithDiscount</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">BigDecimal priceWithoutDiscount</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String taxRate</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">List&lt;String&gt; routeNumbers</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Address addressFrom</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Address addressTo</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">ZonedDateTime departureTime</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String placeType</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String discount</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">StatusEnum status</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">ZonedDateTime validUntil</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String userId</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Integer numberOfLuggage</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">String getTicketId() {</span>
+        <span class="s0">return </span><span class="s1">ticketId</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTicketId(String ticketId) {</span>
+        <span class="s0">this</span><span class="s1">.ticketId = ticketId</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">OfferTypeEnum getType() {</span>
+        <span class="s0">return </span><span class="s1">type</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setType(OfferTypeEnum type) {</span>
+        <span class="s0">this</span><span class="s1">.type = type</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getCompanyName() {</span>
+        <span class="s0">return </span><span class="s1">companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCompanyName(String companyName) {</span>
+        <span class="s0">this</span><span class="s1">.companyName = companyName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">PassengerTypeEnum getPassenger() {</span>
+        <span class="s0">return </span><span class="s1">passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPassenger(PassengerTypeEnum passenger) {</span>
+        <span class="s0">this</span><span class="s1">.passenger = passenger</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">List&lt;String&gt; getTransportTypes() {</span>
+        <span class="s0">return </span><span class="s1">transportTypes</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTransportTypes(List&lt;String&gt; transportTypes) {</span>
+        <span class="s0">this</span><span class="s1">.transportTypes = transportTypes</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">BigDecimal getPriceWithDiscount() {</span>
+        <span class="s0">return </span><span class="s1">priceWithDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPriceWithDiscount(BigDecimal priceWithDiscount) {</span>
+        <span class="s0">this</span><span class="s1">.priceWithDiscount = priceWithDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">BigDecimal getPriceWithoutDiscount() {</span>
+        <span class="s0">return </span><span class="s1">priceWithoutDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPriceWithoutDiscount(BigDecimal priceWithoutDiscount) {</span>
+        <span class="s0">this</span><span class="s1">.priceWithoutDiscount = priceWithoutDiscount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getTaxRate() {</span>
+        <span class="s0">return </span><span class="s1">taxRate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTaxRate(String taxRate) {</span>
+        <span class="s0">this</span><span class="s1">.taxRate = taxRate</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">List&lt;String&gt; getRouteNumbers() {</span>
+        <span class="s0">return </span><span class="s1">routeNumbers</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setRouteNumbers(List&lt;String&gt; routeNumbers) {</span>
+        <span class="s0">this</span><span class="s1">.routeNumbers = routeNumbers</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Address getAddressFrom() {</span>
+        <span class="s0">return </span><span class="s1">addressFrom</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setAddressFrom(Address addressFrom) {</span>
+        <span class="s0">this</span><span class="s1">.addressFrom = addressFrom</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Address getAddressTo() {</span>
+        <span class="s0">return </span><span class="s1">addressTo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setAddressTo(Address addressTo) {</span>
+        <span class="s0">this</span><span class="s1">.addressTo = addressTo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">ZonedDateTime getDepartureTime() {</span>
+        <span class="s0">return </span><span class="s1">departureTime</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDepartureTime(ZonedDateTime departureTime) {</span>
+        <span class="s0">this</span><span class="s1">.departureTime = departureTime</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPlaceType() {</span>
+        <span class="s0">return </span><span class="s1">placeType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPlaceType(String placeType) {</span>
+        <span class="s0">this</span><span class="s1">.placeType = placeType</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getDiscount() {</span>
+        <span class="s0">return </span><span class="s1">discount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setDiscount(String discount) {</span>
+        <span class="s0">this</span><span class="s1">.discount = discount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">StatusEnum getStatus() {</span>
+        <span class="s0">return </span><span class="s1">status</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setStatus(StatusEnum status) {</span>
+        <span class="s0">this</span><span class="s1">.status = status</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">ZonedDateTime getValidUntil() {</span>
+        <span class="s0">return </span><span class="s1">validUntil</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setValidUntil(ZonedDateTime validUntil) {</span>
+        <span class="s0">this</span><span class="s1">.validUntil = validUntil</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getUserId() {</span>
+        <span class="s0">return </span><span class="s1">userId</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setUserId(String userId) {</span>
+        <span class="s0">this</span><span class="s1">.userId = userId</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getOfferId() {</span>
+        <span class="s0">return </span><span class="s1">offerId</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setOfferId(String offerId) {</span>
+        <span class="s0">this</span><span class="s1">.offerId = offerId</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Integer getNumberOfLuggage() {</span>
+        <span class="s0">return </span><span class="s1">numberOfLuggage</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNumberOfLuggage(Integer numberOfLuggage) {</span>
+        <span class="s0">this</span><span class="s1">.numberOfLuggage = numberOfLuggage</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s2">&quot;Ticket{&quot; </span><span class="s1">+</span>
+                <span class="s2">&quot;ticketId='&quot; </span><span class="s1">+ ticketId + </span><span class="s2">'</span><span class="s0">\'</span><span class="s2">' </span><span class="s1">+</span>
+                <span class="s2">&quot;, offerId='&quot; </span><span class="s1">+ offerId + </span><span class="s2">'</span><span class="s0">\'</span><span class="s2">' </span><span class="s1">+</span>
+                <span class="s2">&quot;, type=&quot; </span><span class="s1">+ type +</span>
+                <span class="s2">&quot;, companyName='&quot; </span><span class="s1">+ companyName + </span><span class="s2">'</span><span class="s0">\'</span><span class="s2">' </span><span class="s1">+</span>
+                <span class="s2">&quot;, passenger=&quot; </span><span class="s1">+ passenger +</span>
+                <span class="s2">&quot;, transportTypes=&quot; </span><span class="s1">+ transportTypes +</span>
+                <span class="s2">&quot;, priceWithDiscount=&quot; </span><span class="s1">+ priceWithDiscount +</span>
+                <span class="s2">&quot;, priceWithoutDiscount=&quot; </span><span class="s1">+ priceWithoutDiscount +</span>
+                <span class="s2">&quot;, taxRate='&quot; </span><span class="s1">+ taxRate + </span><span class="s2">'</span><span class="s0">\'</span><span class="s2">' </span><span class="s1">+</span>
+                <span class="s2">&quot;, routeNumbers=&quot; </span><span class="s1">+ routeNumbers +</span>
+                <span class="s2">&quot;, addressFrom=&quot; </span><span class="s1">+ addressFrom +</span>
+                <span class="s2">&quot;, addressTo=&quot; </span><span class="s1">+ addressTo +</span>
+                <span class="s2">&quot;, departureTime=&quot; </span><span class="s1">+ departureTime +</span>
+                <span class="s2">&quot;, placeType='&quot; </span><span class="s1">+ placeType + </span><span class="s2">'</span><span class="s0">\'</span><span class="s2">' </span><span class="s1">+</span>
+                <span class="s2">&quot;, discount='&quot; </span><span class="s1">+ discount + </span><span class="s2">'</span><span class="s0">\'</span><span class="s2">' </span><span class="s1">+</span>
+                <span class="s2">&quot;, status=&quot; </span><span class="s1">+ status +</span>
+                <span class="s2">&quot;, validUntil=&quot; </span><span class="s1">+ validUntil +</span>
+                <span class="s2">&quot;, userId='&quot; </span><span class="s1">+ userId + </span><span class="s2">'</span><span class="s0">\'</span><span class="s2">' </span><span class="s1">+</span>
+                <span class="s2">&quot;, numberOfLuggage=&quot; </span><span class="s1">+ numberOfLuggage +</span>
+                <span class="s2">'}'</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">equals(Object o) {</span>
+        <span class="s0">if </span><span class="s1">(</span><span class="s0">this </span><span class="s1">== o) </span><span class="s0">return true;</span>
+        <span class="s0">if </span><span class="s1">(o == </span><span class="s0">null </span><span class="s1">|| getClass() != o.getClass()) </span><span class="s0">return false;</span>
+        <span class="s1">Ticket ticket = (Ticket) o</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">Objects.equals(ticketId</span><span class="s0">, </span><span class="s1">ticket.ticketId) &amp;&amp;</span>
+                <span class="s1">Objects.equals(offerId</span><span class="s0">, </span><span class="s1">ticket.offerId) &amp;&amp;</span>
+                <span class="s1">type == ticket.type &amp;&amp;</span>
+                <span class="s1">Objects.equals(companyName</span><span class="s0">, </span><span class="s1">ticket.companyName) &amp;&amp;</span>
+                <span class="s1">passenger == ticket.passenger &amp;&amp;</span>
+                <span class="s1">Objects.equals(transportTypes</span><span class="s0">, </span><span class="s1">ticket.transportTypes) &amp;&amp;</span>
+                <span class="s1">Objects.equals(priceWithDiscount</span><span class="s0">, </span><span class="s1">ticket.priceWithDiscount) &amp;&amp;</span>
+                <span class="s1">Objects.equals(priceWithoutDiscount</span><span class="s0">, </span><span class="s1">ticket.priceWithoutDiscount) &amp;&amp;</span>
+                <span class="s1">Objects.equals(taxRate</span><span class="s0">, </span><span class="s1">ticket.taxRate) &amp;&amp;</span>
+                <span class="s1">Objects.equals(routeNumbers</span><span class="s0">, </span><span class="s1">ticket.routeNumbers) &amp;&amp;</span>
+                <span class="s1">Objects.equals(addressFrom</span><span class="s0">, </span><span class="s1">ticket.addressFrom) &amp;&amp;</span>
+                <span class="s1">Objects.equals(addressTo</span><span class="s0">, </span><span class="s1">ticket.addressTo) &amp;&amp;</span>
+                <span class="s1">Objects.equals(departureTime</span><span class="s0">, </span><span class="s1">ticket.departureTime) &amp;&amp;</span>
+                <span class="s1">Objects.equals(placeType</span><span class="s0">, </span><span class="s1">ticket.placeType) &amp;&amp;</span>
+                <span class="s1">Objects.equals(discount</span><span class="s0">, </span><span class="s1">ticket.discount) &amp;&amp;</span>
+                <span class="s1">status == ticket.status &amp;&amp;</span>
+                <span class="s1">Objects.equals(validUntil</span><span class="s0">, </span><span class="s1">ticket.validUntil) &amp;&amp;</span>
+                <span class="s1">Objects.equals(userId</span><span class="s0">, </span><span class="s1">ticket.userId) &amp;&amp;</span>
+                <span class="s1">Objects.equals(numberOfLuggage</span><span class="s0">, </span><span class="s1">ticket.numberOfLuggage)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">hashCode() {</span>
+        <span class="s0">return </span><span class="s1">Objects.hash(ticketId</span><span class="s0">, </span><span class="s1">offerId</span><span class="s0">, </span><span class="s1">type</span><span class="s0">, </span><span class="s1">companyName</span><span class="s0">, </span><span class="s1">passenger</span><span class="s0">, </span><span class="s1">transportTypes</span><span class="s0">, </span><span class="s1">priceWithDiscount</span><span class="s0">, </span><span class="s1">priceWithoutDiscount</span><span class="s0">, </span><span class="s1">taxRate</span><span class="s0">, </span><span class="s1">routeNumbers</span><span class="s0">, </span><span class="s1">addressFrom</span><span class="s0">, </span><span class="s1">addressTo</span><span class="s0">, </span><span class="s1">departureTime</span><span class="s0">, </span><span class="s1">placeType</span><span class="s0">, </span><span class="s1">discount</span><span class="s0">, </span><span class="s1">status</span><span class="s0">, </span><span class="s1">validUntil</span><span class="s0">, </span><span class="s1">userId</span><span class="s0">, </span><span class="s1">numberOfLuggage)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

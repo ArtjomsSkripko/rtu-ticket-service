@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>V1_00__CREATE_create_tables.sql</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+V1_00__CREATE_create_tables.sql</font>
+</center></td></tr></table>
+<pre><span class="s0">CREATE TABLE </span><span class="s2">&quot;transport_system&quot;</span><span class="s1">.</span><span class="s2">&quot;ticket&quot;</span><span class="s1">(</span>
+    <span class="s2">&quot;company_name&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;place_type&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;transport_type&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;dep_city&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;dep_street&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;dep_home&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;dest_home&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;dest_street&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;dest_city&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;dep_time&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;ticket_id&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s0">NOT NULL</span><span class="s1">,</span>
+    <span class="s2">&quot;type&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;passenger&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;price_with_discount&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;price_without_discount&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;tax_rate&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;route_number&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;valid_until&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;user_id&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;discount&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) ,</span>
+    <span class="s2">&quot;offer_id&quot; </span><span class="s0">varchar</span><span class="s1">(</span><span class="s3">100</span><span class="s1">) </span><span class="s0">NOT NULL</span>
+<span class="s1">);</span>
+</pre>
+</body>
+</html>
